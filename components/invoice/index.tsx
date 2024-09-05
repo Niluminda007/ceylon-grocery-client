@@ -1,5 +1,5 @@
 import Logo from "@/components/logo";
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import Image from "next/image";
 import { FaDownload, FaSpinner } from "react-icons/fa";
 import { ExtendedOrder } from "@/types/order";
@@ -12,7 +12,7 @@ interface InvoiceProps {
   order: ExtendedOrder;
 }
 
-const Invoice = ({ order }: InvoiceProps) => {
+const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const invoiceRef = useRef<HTMLDivElement>(null);
 

@@ -34,7 +34,8 @@ const ShopByCategory = () => {
               <div
                 className={`overflow-hidden cursor-pointer flex flex-col gap-4 group transition-transform transform hover:scale-105 rounded-lg shadow-lg ${
                   categoryColors[index % categoryColors.length]
-                }`}>
+                }`}
+              >
                 <div className="relative overflow-hidden rounded-t-lg">
                   <CldImage
                     className="w-full h-64 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"

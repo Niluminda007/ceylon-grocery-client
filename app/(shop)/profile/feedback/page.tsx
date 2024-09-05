@@ -39,7 +39,7 @@ const FeedbackPage = () => {
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
               >
                 <p className="text-lg italic text-gray-700 mb-4">
-                  "{feedback.comment}"
+                  &quot;{feedback.comment}&quot;
                 </p>
                 <div className="flex items-center justify-center mb-2">
                   {[...Array(5)].map((_, index) => (

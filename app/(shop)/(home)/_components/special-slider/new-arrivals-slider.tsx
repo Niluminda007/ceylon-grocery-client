@@ -2,13 +2,13 @@
 
 import Slider from "@/components/slider";
 import { fetcher } from "@/lib/fetcher";
-import { Product } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/loader";
 import ProductCard from "@/components/product-card";
+import { ExtendedProduct } from "@/types/product";
 
 const NewArrivalsSlider = () => {
-  const { data, isLoading } = useQuery<Product[]>({
+  const { data, isLoading } = useQuery<ExtendedProduct[]>({
     queryKey: ["new-arrivals"],
     queryFn: () =>
       fetcher({
@@ -21,7 +21,7 @@ const NewArrivalsSlider = () => {
     data && (
       <Slider
         data={data}
-        renderItem={(item: Product) => <ProductCard product={item} tag="New" />}
+        renderItem={(item) => <ProductCard product={item} tag="New" />}
       />
     )
   );

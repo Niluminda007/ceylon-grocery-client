@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { DiscountType } from "@prisma/client";

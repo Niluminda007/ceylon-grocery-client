@@ -86,7 +86,8 @@ export const SearchBar = () => {
       {/* No Results Feedback */}
       {!isPending && data?.length === 0 && (
         <div className="text-lg text-gray-600 mt-4">
-          No results found for "{searchQuery}". Try a different search term or{" "}
+          No results found for &quot;{searchQuery}&quot;. Try a different search
+          term or{" "}
           <Link
             href="/products"
             className="text-blue-600 underline"

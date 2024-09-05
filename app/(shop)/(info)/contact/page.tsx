@@ -28,9 +28,10 @@ const Page = () => {
         </div>
         <div className="text-lg text-neutral-700 max-w-lg mx-auto">
           <p className="mb-6">
-            We'd love to hear from you! Follow us on social media, share your
-            experiences, or get in touch with us directly. Whether you have
-            custom requests, orders, or feedback, we're here to assist you 24/7.
+            We&apos;d love to hear from you! Follow us on social media, share
+            your experiences, or get in touch with us directly. Whether you have
+            custom requests, orders, or feedback, we&apos;re here to assist you
+            24/7.
           </p>
           <p className="font-semibold">Our team is always ready to help!</p>
         </div>

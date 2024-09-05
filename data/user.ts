@@ -46,10 +46,7 @@ export const getUserDTOByID = async (
       select: {
         name: true,
         email: true,
-        address: true,
         telephone: true,
-        country: true,
-        city: true,
       },
     });
 

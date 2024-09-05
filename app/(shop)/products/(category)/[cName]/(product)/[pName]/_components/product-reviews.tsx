@@ -1,4 +1,4 @@
-import { ExtendedReview } from "@/types";
+import { ExtendedReview } from "@/types/review";
 import React from "react";
 import { RiStarFill, RiStarLine } from "react-icons/ri";
 

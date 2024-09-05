@@ -1,7 +1,8 @@
+export const dynamic = "force-dynamic";
+
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { UserDTO } from "@/types/user";
 
 export async function GET(req: NextRequest) {
   try {

@@ -6,15 +6,13 @@ import useCheckOut from "@/hooks/use-checkout";
 import { fetcher } from "@/lib/fetcher";
 import { Discount, DiscountType } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export const CheckOutControl = () => {
   const totalItems = useCartStore((state) => state.totalItems);
   const router = useRouter();
   const currentStage = useCheckOut((state) => state.currentStage);
-  const currentPath = usePathname();
-  const lastRedirectedPath = useRef<string | null>(null);
 
   const deliveryOption = useCheckOut((state) => state.data.deliveryOption);
   const discounts = useCartStore((state) => state.discounts);
@@ -42,17 +40,6 @@ export const CheckOutControl = () => {
       setDiscount(fetchedDeliveryDiscount);
     }
   }, [fetchedDeliveryDiscount, total]);
-
-  // useEffect(() => {
-  //   const expectedPath = `/checkout/${currentStage}`;
-  //   if (
-  //     currentPath !== expectedPath &&
-  //     lastRedirectedPath.current !== expectedPath
-  //   ) {
-  //     lastRedirectedPath.current = expectedPath;
-  //     router.replace(expectedPath);
-  //   }
-  // }, [currentStage]);
 
   useEffect(() => {
     if (totalItems === 0 && currentStage === "info") {

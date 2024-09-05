@@ -4,6 +4,8 @@ import DeleteAccount from "./_components/delete-account";
 import { currentUser } from "@/lib/auth";
 import { doesUserHavePassword } from "@/data/user";
 
+export const dynamic = "force-dynamic";
+
 const SettingsPage = async (): Promise<JSX.Element | null> => {
   try {
     const user = await currentUser();

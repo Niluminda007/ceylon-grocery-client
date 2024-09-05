@@ -176,7 +176,9 @@ const About = () => {
                 key={feedback.id}
                 className="p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <p className="text-neutral-600">"{feedback.comment}"</p>
+                <p className="text-neutral-600">
+                  &quot;{feedback.comment}&quot;
+                </p>
                 <div className="mt-4 flex items-center justify-center">
                   {[...Array(5)].map((_, index) => (
                     <FaStar
@@ -205,10 +207,10 @@ const About = () => {
           Join Us on Our Journey
         </h2>
         <p className="text-neutral-600 mt-4 max-w-3xl mx-auto">
-          Whether you're longing for the flavors of home or simply exploring new
-          tastes, we invite you to be part of our growing community. Together,
-          let's celebrate the rich culinary heritage of Sri Lanka, wherever you
-          may be.
+          Whether you&apos;re longing for the flavors of home or simply
+          exploring new tastes, we invite you to be part of our growing
+          community. Together, let&apos;s celebrate the rich culinary heritage
+          of Sri Lanka, wherever you may be.
         </p>
         <Link
           href="/products"
