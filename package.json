@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && prisma migrate deploy",
     "email": "email dev --dir app/(shop)/(info)/contact/_components/emails"
   },
   "dependencies": {
