@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run seed",
+    "seed-db": "tsc prisma/seed/index.ts && node prisma/seed/index.js && rimraf prisma/seed/*.js prisma/seed/*.map",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma migrate reset --force --skip-seed && prisma generate && prisma db push",
+    "postinstall": "prisma generate && prisma db push",
     "email": "email dev --dir app/(shop)/(info)/contact/_components/emails"
   },
   "dependencies": {

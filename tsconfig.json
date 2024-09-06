@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,6 +22,17 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "prisma/seed.mjs",
+    "prisma/seed/data/products.ts",
+    "prisma/seed/data/payment-methods.ts",
+    "prisma/seed/data/discounts.ts",
+    "prisma/seed/data/delivery-option.ts",
+    "prisma/seed/data/categories.ts"
+  ],
   "exclude": ["node_modules"]
 }
