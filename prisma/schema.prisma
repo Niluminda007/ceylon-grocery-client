@@ -13,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// if make changes do the same for client project
 model User {
   id           String       @id @default(cuid())
   name         String?
@@ -34,6 +35,12 @@ model User {
   feedbacks    Feedback[] @relation("UserFeedback")
 
   @@map("users")
+}
+
+model Admin {
+  id           String     @id @default(cuid())
+  username     String
+  password     String
 }
 
 model Account {

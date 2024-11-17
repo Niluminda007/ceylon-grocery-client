@@ -19,7 +19,7 @@ const SearchModal = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl  p-10  flex flex-col shadow-2xl border-none rounded-2xl bg-white bg-opacity-95">
+      <DialogContent className="max-w-sm sm:max-w-4xl  p-10  flex flex-col shadow-2xl border-none rounded-2xl bg-white bg-opacity-95">
         <DialogHeader className="flex justify-between items-center border-b pb-6 mb-6">
           <DialogTitle className="text-4xl font-bold text-black tracking-tight">
             Search

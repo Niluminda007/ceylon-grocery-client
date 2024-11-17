@@ -16,10 +16,13 @@ export async function GET(req: NextRequest, params: { pName: string }) {
     if (!pName) {
       return NextResponse.json("Missing prodcut Name", { status: 400 });
     }
+
     pName = decodeURIComponent(pName);
     const productName = uppercaseFirstChars(
       replaceUnderscoresWithSpaces(pName)
     );
+
+    console.log(pName);
 
     const product = await db.product.findFirst({
       where: {

@@ -22,7 +22,7 @@ export const ProductListSkeleton = () => {
 
 const ProductList = ({ products }: ProductListProps) => {
   return (
-    <div className="w-full px-4 gap-6 mt-4 flex flex-wrap relative justify-center">
+    <div className="w-full px-4 gap-6 mt-4 flex flex-wrap relative justify-start">
       {products.length > 0 &&
         products.map((product) => (
           <ProductCard key={product.id} product={product} />

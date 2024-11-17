@@ -27,22 +27,19 @@ export const CategoryHeaderSkeleton = () => {
 
 const CategoryHeader = ({ name, description, images }: CategoryHeaderProps) => {
   return (
-    <div className="w-full flex lg:h-[calc(100vh-7.75rem)] mb-6  rounded-xl p-6">
-      <div className="w-full h-full gap-4 flex flex-col lg:flex-row">
-        <div className="lg:flex-[0.4] w-full h-full py-8 flex flex-col justify-center">
-          <h1 className="text-5xl  font-bold uppercase text-left mb-4">
-            {name}
-          </h1>
+    <div className="w-full flex mb-6  rounded-xl p-6">
+      <div className="w-full h-full gap-4 flex flex-col">
+        <div className="w-full h-full py-8 flex flex-col justify-center">
           <p className="text-neutral-700 font-light text-lg text-justify">
             {description}
           </p>
         </div>
-        <div className="lg:flex-[0.6] w-full h-full">
+        <div className="w-full h-64 sm:h-96">
           <CldImage
             className="w-full h-full rounded-lg object-cover shadow-lg"
             alt={`category_${name}_image`}
             width="1920"
-            height="1080"
+            height="400"
             src={images[0]}
             quality={50}
             format="webp"

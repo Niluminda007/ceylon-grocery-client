@@ -27,8 +27,9 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
   if (isLoading) {
     return (
       <div className="w-full flex flex-col min-h-screen  p-6">
-        <CategoryHeaderSkeleton />
         <ProductListSkeleton />
+
+        <CategoryHeaderSkeleton />
       </div>
     );
   }
@@ -37,12 +38,15 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
     <div className="w-full flex flex-col min-h-screen  p-6">
       {data && (
         <>
+          <h1 className="p-6 text-5xl  font-bold uppercase text-left mb-4">
+            {data.name}
+          </h1>
+          <ProductList products={data.products} />
           <CategoryHeader
             name={data.name}
             description={data.description}
             images={data.images}
           />
-          <ProductList products={data.products} />
         </>
       )}
     </div>
