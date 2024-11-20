@@ -17,7 +17,7 @@ const HeroSlider = () => {
   };
 
   return (
-    <div className="z-[50] relative w-full aspect-[16/6] overflow-hidden">
+    <div className="z-[50] relative w-full aspect-[16/9] overflow-hidden">
       <div
         className="flex h-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
