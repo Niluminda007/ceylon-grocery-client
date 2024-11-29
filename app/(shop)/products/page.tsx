@@ -35,7 +35,7 @@ const page = () => {
 
       <div className="flex flex-[0.05] md:flex-[.1] border-0 border-r border-gray-300"></div>
       <div className="w-full flex flex-[.8] ">
-        <div className="ml-2 lg:ml-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="w-full ml-2 lg:ml-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {categoryLinks.map((link) => (
             <Link
               key={link.id}
@@ -51,7 +51,7 @@ const page = () => {
                   quality="50"
                   sizes="(max-width: 480px) 100vw, 50vw"
                   src={link.image}
-                  alt="Spices_Img"
+                  alt="cat_Img"
                 />
               </div>
               <span className="text-lg font-semibold text-gray-800 opacity-60 transition ease-linear duration-150 group-hover:opacity-100">
