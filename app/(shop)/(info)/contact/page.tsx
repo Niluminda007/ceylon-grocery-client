@@ -19,7 +19,7 @@ const Page = () => {
       {/* Contact Image */}
       <div className="flex justify-center w-full max-w-4xl mb-16">
         <Image
-          src="/contact/contact_us.webp"
+          src="/contact/contact_us.jpg"
           alt="Contact Us"
           width={600}
           height={400}
