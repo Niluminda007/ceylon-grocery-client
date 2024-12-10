@@ -5,6 +5,7 @@ import { discounts } from "./data/discounts";
 import { paymentMethods } from "./data/payment-methods";
 import { initialProducts } from "./data/products";
 import { Category, PrismaClient } from "@prisma/client";
+import { slugify } from "@/lib/utils";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +16,7 @@ const seedCategories = async () => {
     const categoryTransaction = initialCategories.map(
       ({ name, description, images, path }) =>
         prisma.category.create({
-          data: { name, description, images, path },
+          data: { name, description, images, path, slug: slugify(name) },
         })
     );
     return await prisma.$transaction(categoryTransaction);
@@ -47,6 +48,7 @@ const seedProducts = async (categories: Category[]) => {
           name: product.name,
           price: product.price,
           sku: generateSKU(product.name, existingCategory.id),
+          slug: slugify(product.name),
           salePrice: product.salePrice,
           description: product.description,
           weight: product.weight,
