@@ -101,7 +101,7 @@ const About = () => {
           alt="Sri Lankan traditional food"
           width="800"
           height="600"
-          src="ceylon-grocery/about-us/about_traditional_food_g7mtyf.jpg"
+          src="ceylon-grocery/about-us/fast_delivery_m2j20m.webp"
           quality={80}
           format="webp"
         />
@@ -110,7 +110,7 @@ const About = () => {
           alt="Sri Lankan culture"
           width="800"
           height="600"
-          src="ceylon-grocery/about-us/about_culture_l28iz6.webp"
+          src="ceylon-grocery/about-us/satisfaction_czmo6c.webp"
           quality={80}
           format="webp"
         />
