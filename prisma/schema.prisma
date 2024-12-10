@@ -69,6 +69,9 @@ model Category {
   description     String   @db.Text
   images          String[]
   path            String
+  slug            String  @unique    
+  slugHistory     String[]      @default([])
+
   products        Product[] @relation("ProductCategory")
   parentCategory  Category? @relation("ParentChildCategories", fields: [parentCategoryId], references: [id])
   parentCategoryId String?
@@ -90,6 +93,8 @@ model Product {
   inStock         Boolean
   stockCount      Int
   path            String
+  slug            String        @unique        
+  slugHistory     String[]      @default([])
 
   category_id     String
   category        Category   @relation(fields: [category_id], references: [id], onDelete: Cascade, name: "ProductCategory")

@@ -11,6 +11,7 @@ import { ExtendedProduct } from "@/types/product";
 import { CartItem } from "@/types/cart";
 import { decimalToNumber } from "@/lib/utils";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 interface ProductCardType {
   product: ExtendedProduct;
@@ -18,7 +19,7 @@ interface ProductCardType {
 }
 
 const ProductCard = ({ product, tag }: ProductCardType) => {
-  const { id, name, price, images, path, discounts, inStock, stockCount } =
+  const { id, name, price, images, slug, discounts, inStock, stockCount } =
     product;
   const [imageLoaded, setImageLoaded] = useState(false);
   const cartState = useCartStore();
@@ -73,6 +74,8 @@ const ProductCard = ({ product, tag }: ProductCardType) => {
       ? `Only ${stockCount} left!`
       : "Out of Stock";
 
+  const pathName = usePathname();
+
   return (
     <div
       className={`sm:w-[270px] relative z-0 bg-gray-900 shadow-lg hover:shadow-2xl flex flex-col justify-between transition-transform transform hover:scale-105 rounded-xl overflow-hidden m-4 ${
@@ -80,7 +83,7 @@ const ProductCard = ({ product, tag }: ProductCardType) => {
       }`}
       key={id}
     >
-      <Link href={`/${path}`}>
+      <Link href={`${pathName}/${slug}`}>
         <div className="w-full h-[320px] overflow-hidden relative">
           {!imageLoaded && (
             <Skeleton className="absolute inset-0 w-[386px] h-[386px] rounded-lg bg-gray-800" />

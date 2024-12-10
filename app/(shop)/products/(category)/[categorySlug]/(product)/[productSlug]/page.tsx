@@ -10,15 +10,18 @@ import { ExtendedProduct } from "@/types/product";
 
 interface ProductPageProps {
   params: {
-    pName: string;
+    productSlug: string;
   };
 }
 
 const ProductPage = ({ params }: ProductPageProps) => {
   const { data, isLoading, error } = useQuery<ExtendedProduct>({
-    queryKey: ["product", params.pName],
+    queryKey: ["product", params.productSlug],
     queryFn: () =>
-      fetcher({ url: "/fetch/product", params: { pName: params.pName } }),
+      fetcher({
+        url: "/fetch/product",
+        params: { productSlug: params.productSlug },
+      }),
   });
   return (
     <div className="min-h-screen ">

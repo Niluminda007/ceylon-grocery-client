@@ -81,3 +81,10 @@ export const formatAddress = (address: Address): string => {
     address.addressLine2 ? address.addressLine2 + ", " : ""
   }${address.city}, ${address.postalCode}, ${address.country}`;
 };
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
