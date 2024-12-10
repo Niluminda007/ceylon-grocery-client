@@ -15,3 +15,10 @@ export const lowercaseFirstChars = (data: string): string => {
 export const generateUrlPaths = (data: string): string => {
   return data.split(" ").join("_");
 };
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}

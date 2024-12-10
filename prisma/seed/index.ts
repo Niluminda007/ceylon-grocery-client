@@ -1,11 +1,15 @@
-import { generateSKU, generateUrlPaths, lowercaseFirstChars } from "./utils";
+import {
+  generateSKU,
+  generateUrlPaths,
+  lowercaseFirstChars,
+  slugify,
+} from "./utils";
 import { initialCategories } from "./data/categories";
 import { deliveryOptions } from "./data/delivery-option";
 import { discounts } from "./data/discounts";
 import { paymentMethods } from "./data/payment-methods";
 import { initialProducts } from "./data/products";
 import { Category, PrismaClient } from "@prisma/client";
-import { slugify } from "@/lib/utils";
 
 const prisma = new PrismaClient();
 
