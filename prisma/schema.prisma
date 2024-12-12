@@ -68,7 +68,6 @@ model Category {
   name            String
   description     String   @db.Text
   images          String[]
-  path            String
   slug            String  @unique    
   slugHistory     String[]      @default([])
 
@@ -92,7 +91,6 @@ model Product {
   dimensions      String?
   inStock         Boolean
   stockCount      Int
-  path            String
   slug            String        @unique        
   slugHistory     String[]      @default([])
 

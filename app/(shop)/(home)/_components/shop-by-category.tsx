@@ -29,8 +29,8 @@ const ShopByCategory = () => {
       {isLoading && <Loader />}
       {!isLoading && data && (
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.map(({ id, name, path, images }, index) => (
-            <Link href={`/${path}`} key={id}>
+          {data.map(({ id, name, slug, images }, index) => (
+            <Link href={`/products/${slug}`} key={id}>
               <div
                 className={`overflow-hidden cursor-pointer flex flex-col gap-4 group transition-transform transform hover:scale-105 rounded-lg shadow-lg ${
                   categoryColors[index % categoryColors.length]

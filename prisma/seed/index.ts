@@ -1,9 +1,4 @@
-import {
-  generateSKU,
-  generateUrlPaths,
-  lowercaseFirstChars,
-  slugify,
-} from "./utils";
+import { generateSKU, slugify } from "./utils";
 import { initialCategories } from "./data/categories";
 import { deliveryOptions } from "./data/delivery-option";
 import { discounts } from "./data/discounts";
@@ -18,9 +13,9 @@ const seedCategories = async () => {
   const existingCategories = await prisma.category.count();
   if (existingCategories === 0) {
     const categoryTransaction = initialCategories.map(
-      ({ name, description, images, path }) =>
+      ({ name, description, images }) =>
         prisma.category.create({
-          data: { name, description, images, path, slug: slugify(name) },
+          data: { name, description, images, slug: slugify(name) },
         })
     );
     return await prisma.$transaction(categoryTransaction);
@@ -39,14 +34,6 @@ const seedProducts = async (categories: Category[]) => {
       if (!existingCategory)
         throw new Error(`Category ${product.category} not found`);
 
-      const categoryUrlPath = generateUrlPaths(
-        lowercaseFirstChars(existingCategory.name)
-      );
-      const productUrlPath = generateUrlPaths(
-        lowercaseFirstChars(product.name)
-      );
-      const path = `products/${categoryUrlPath}/${productUrlPath}`;
-
       return prisma.product.create({
         data: {
           name: product.name,
@@ -58,7 +45,6 @@ const seedProducts = async (categories: Category[]) => {
           weight: product.weight,
           inStock: product.inStock,
           stockCount: product.stockCount,
-          path,
           category_id: existingCategory.id,
           images: product.images,
           tags: product.tags,

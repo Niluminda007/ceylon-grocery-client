@@ -11,8 +11,8 @@ export const deliveryOptions = [
     id: "2",
     method: "Express",
     days: 1,
-    cost: 8.99,
-    description: "Express delivery within 1 day.",
-    active: false,
+    cost: 6.0,
+    description: "Express delivery(Within 24 hours)",
+    active: true,
   },
 ];

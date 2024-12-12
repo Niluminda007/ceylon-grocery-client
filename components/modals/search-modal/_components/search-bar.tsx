@@ -104,7 +104,7 @@ export const SearchBar = () => {
           {data.map((product) => (
             <Link
               key={product.id}
-              href={`/${product.path}`}
+              href={`/products/${product.slug}`}
               onClick={onClose}
               className="w-full p-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 ease-in-out flex items-center"
             >

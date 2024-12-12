@@ -1,8 +1,8 @@
 export const paymentMethods = [
   {
-    method: "Via Card",
-    description: "Pay using your credit or debit card.",
-    active: false,
+    method: "Cash on Delivery",
+    description: "Pay with cash when your order is delivered to your doorstep.",
+    active: true,
     bankAccounts: [],
   },
   {
