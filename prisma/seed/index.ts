@@ -15,7 +15,13 @@ const seedCategories = async () => {
     const categoryTransaction = initialCategories.map(
       ({ name, description, images }) =>
         prisma.category.create({
-          data: { name, description, images, slug: slugify(name) },
+          data: {
+            name,
+            description,
+            sortOrder: -1,
+            images,
+            slug: slugify(name),
+          },
         })
     );
     return await prisma.$transaction(categoryTransaction);
