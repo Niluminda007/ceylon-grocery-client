@@ -44,7 +44,7 @@ const OrdersPage = () => {
       {!isDataLoading && error && (
         <div className="p-4 bg-red-700 bg-opacity-75 rounded-lg flex items-center space-x-2 shadow-lg">
           <FaSadTear className="h-6 w-6 text-yellow-400" />
-          <span className="font-semibold">
+          <span className="font-semibold text-neutral-800 ">
             Something went wrong. Please try again later.
           </span>
         </div>
@@ -76,7 +76,9 @@ const OrdersPage = () => {
             <div className="text-yellow-400">
               <FaSadTear className="h-12 w-12 mb-2" />
             </div>
-            <p className="text-xl sm:text-2xl">No orders found</p>
+            <p className="text-xl text-neutral-800 sm:text-2xl">
+              No orders found
+            </p>
             <button
               onClick={refetchOrders}
               className="px-6 py-3 bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
