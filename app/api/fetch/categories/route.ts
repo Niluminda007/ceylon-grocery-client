@@ -13,7 +13,11 @@ export async function GET(req: NextRequest) {
         { status: 401 }
       );
     }
-    const categories = await db.category.findMany({});
+    const categories = await db.category.findMany({
+      orderBy: {
+        sortOrder: "asc",
+      },
+    });
     return NextResponse.json(categories, { status: 200 });
   } catch (error) {
     console.error("Error fetching categories:", error);

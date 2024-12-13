@@ -70,6 +70,7 @@ model Category {
   images          String[]
   slug            String  @unique    
   slugHistory     String[]      @default([])
+  sortOrder       Int
 
   products        Product[] @relation("ProductCategory")
   parentCategory  Category? @relation("ParentChildCategories", fields: [parentCategoryId], references: [id])

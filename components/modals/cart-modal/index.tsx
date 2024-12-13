@@ -18,6 +18,7 @@ import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { AiOutlineShopping } from "react-icons/ai";
 import Link from "next/link";
 import CartItems from "./cart-items";
+import { FaEuroSign } from "react-icons/fa6";
 
 const CartModal = () => {
   const { totalItems, total, isOpen, onClose } = useCartStore((state) => ({
@@ -30,7 +31,7 @@ const CartModal = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent className="p-6 bg-gray-100 rounded-lg shadow-xl">
+      <SheetContent className="p-6 bg-gray-100 rounded-lg shadow-xl overflow-y-auto">
         <SheetHeader className="mb-4">
           <div className="mt-6 flex justify-between items-center">
             <SheetTitle className="text-2xl font-bold text-gray-600 flex items-center">
@@ -51,8 +52,8 @@ const CartModal = () => {
         <SheetFooter>
           <div className="w-full flex flex-col mt-6 border-t pt-4 space-y-4">
             <div className="text-lg font-semibold text-gray-800 flex items-center">
-              <FaDollarSign className="mr-2" />
-              Total: ${total.toFixed(2)}
+              <FaEuroSign className="mr-2" />
+              Total: {total.toFixed(2)}
             </div>
             <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 ">
               <SheetClose asChild>

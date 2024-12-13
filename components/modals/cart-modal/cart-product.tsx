@@ -5,7 +5,7 @@ import useCartStore from "@/hooks/use-cart";
 import { CldImage } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { FaDollarSign } from "react-icons/fa";
+import { FaEuroSign } from "react-icons/fa";
 import { CartItem } from "@/types/cart";
 
 interface CartProductProps {
@@ -59,27 +59,27 @@ const CartProduct = ({ item }: CartProductProps) => {
           <div>
             <h2 className="text-lg font-semibold text-gray-900">{name}</h2>
             <p className="text-sm text-gray-700 flex items-center">
-              <FaDollarSign className="mr-1" /> {`${price}`} per unit
+              <FaEuroSign className="mr-1" /> {`${price}`} per unit
             </p>
             <p className="text-sm text-gray-700 flex items-center">
-              <FaDollarSign className="mr-1" /> {productCount * unitPrice} total
+              <FaEuroSign className="mr-1" /> {productCount * unitPrice} total
             </p>
           </div>
         </div>
-        <button
-          onClick={() => removeFromCart(item.id)}
-          className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all"
-        >
-          <RiDeleteBinLine size={20} />
-        </button>
       </div>
 
-      <div className="flex items-center justify-between space-x-4">
+      <div className="flex items-center justify-between space-x-4 relative">
         <Counter
           count={productCount}
           setCount={setProductCount}
           maxCount={product.stockCount}
         />
+        <button
+          onClick={() => removeFromCart(item.id)}
+          className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all absolute right-0"
+        >
+          <RiDeleteBinLine size={20} />
+        </button>
       </div>
     </div>
   );

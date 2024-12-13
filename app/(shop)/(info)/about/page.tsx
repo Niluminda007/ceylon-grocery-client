@@ -51,7 +51,7 @@ const About = () => {
       {/* Values Section */}
       <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
         <div className="flex flex-col items-center">
-          <FaLeaf className="text-green-600 text-7xl mb-4 animate-spin-slow" />
+          <FaLeaf className="text-green-600 text-7xl mb-4 animate-pulse" />
           <h2 className="text-xl font-medium text-neutral-700 hover:text-green-600 transition-colors duration-300">
             Authenticity
           </h2>
