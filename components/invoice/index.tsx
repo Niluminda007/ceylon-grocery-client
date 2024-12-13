@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import { FC, useRef, useState } from "react";
 import Image from "next/image";
-import { FaDownload, FaSpinner } from "react-icons/fa";
+import { FaDownload, FaMoneyBillWave, FaSpinner } from "react-icons/fa";
 import { ExtendedOrder } from "@/types/order";
 import { decimalToNumber, formatAddress } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -51,6 +51,9 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
       new Date(order.createdAt).getTime() +
         order.deliveryOption.days * 24 * 60 * 60 * 1000
     ).toLocaleDateString();
+
+  const isBankTransfer = order.paymentMethod?.method === "Bank Transfer";
+
   return (
     <>
       <Button
@@ -105,7 +108,12 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
                   {deliveryDate}
                 </div>
               )}
-              <div>{`(Monday & Thursday 8pm to 10pm)`}</div>
+              <div>
+                {order.deliveryOption &&
+                  (order.deliveryOption.method === "Express"
+                    ? "(Within 24 hours)"
+                    : "(Monday & Thursday 8pm to 10pm)")}
+              </div>
 
               <div>
                 <span className="font-semibold">Invoice Date: </span>
@@ -115,49 +123,63 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
           </div>
         </div>
 
-        {/* Bank Details Section */}
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-gray-700 underline mb-2">
-            Bank Details
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {order.paymentMethod?.bankAccounts.map(
-              ({ id, bankName, accountName, accountNumber, bic }) => (
-                <div
-                  key={id}
-                  className="border rounded-sm bg-emerald-50 p-3 shadow-sm"
-                >
-                  <div className="text-sm font-semibold text-neutral-900 mb-1">
-                    {bankName}
-                  </div>
-                  <div className="text-sm text-neutral-700">
-                    <div className="flex justify-between">
-                      <span>Acc Holder:</span>
-                      <span className="font-medium">{accountName}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Bank Name:</span>
-                      <span className="font-medium">{bankName}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>IBAN:</span>
-                      <span className="font-medium">{accountNumber}</span>
-                    </div>
-                    {bic && (
-                      <div className="flex justify-between">
-                        <span>BIC:</span>
-                        <span className="font-medium">{bic}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            )}
+        {/* Payment Method */}
+        {!isBankTransfer ? (
+          <div className="mb-6 flex items-start space-x-4 border rounded-lg bg-yellow-50 p-4 shadow-sm">
+            <div className="text-yellow-600 text-2xl">
+              <FaMoneyBillWave />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-gray-800 underline decoration-yellow-500 mb-2">
+                Payment Method: Cash on Delivery
+              </h2>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Please have the total amount ready in cash upon delivery.
+                Payment will be collected at your doorstep.
+              </p>
+            </div>
           </div>
-          <p className="text-neutral-400 text-sm mt-2">
-            Note: After the payment, send the screenshot of the transaction.
-          </p>
-        </div>
+        ) : (
+          <div className="mb-6">
+            <h2 className="text-lg font-bold text-gray-800 mb-4">
+              Bank Details
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {order.paymentMethod?.bankAccounts?.map(
+                ({ id, bankName, accountName, accountNumber, bic }) => (
+                  <div
+                    key={id}
+                    className="border rounded-lg bg-emerald-50 p-4 shadow-sm"
+                  >
+                    <div className="text-sm font-semibold text-neutral-900 mb-2">
+                      {bankName}
+                    </div>
+                    <div className="text-sm text-gray-700">
+                      <div className="flex justify-between">
+                        <span>Acc Holder:</span>
+                        <span className="font-medium">{accountName}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>IBAN:</span>
+                        <span className="font-medium">{accountNumber}</span>
+                      </div>
+                      {bic && (
+                        <div className="flex justify-between">
+                          <span>BIC:</span>
+                          <span className="font-medium">{bic}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+            <p className="text-sm text-neutral-400 mt-2">
+              Note: After the payment, please send a screenshot of the
+              transaction.
+            </p>
+          </div>
+        )}
 
         {/* Orders Table */}
         <div className="mb-4">
@@ -274,3 +296,228 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
 };
 
 export default Invoice;
+
+// import Logo from "@/components/logo";
+// import { FC, useRef, useState } from "react";
+// import Image from "next/image";
+// import {
+//   FaDownload,
+//   FaSpinner,
+//   FaMoneyBillWave,
+//   FaCheckCircle,
+// } from "react-icons/fa";
+// import { ExtendedOrder } from "@/types/order";
+// import { decimalToNumber, formatAddress } from "@/lib/utils";
+// import { Button } from "@/components/ui/button";
+// import { OrdersTable } from "./orders-table";
+// import { generateInvoice } from "@/lib/generate-invoice";
+
+// interface InvoiceProps {
+//   order: ExtendedOrder;
+// }
+
+// const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
+//   const [isDownloading, setIsDownloading] = useState(false);
+//   const invoiceRef = useRef<HTMLDivElement>(null);
+
+//   const handleInvoiceDownload = async () => {
+//     if (typeof window === "undefined") return;
+//     if (invoiceRef.current) {
+//       try {
+//         setIsDownloading(true);
+//         const pdfBlob = await generateInvoice(invoiceRef);
+//         if (pdfBlob) {
+//           const url = URL.createObjectURL(pdfBlob);
+//           const a = document.createElement("a");
+//           a.href = url;
+//           a.download = "ceylon_grocery_invoice.pdf";
+//           document.body.appendChild(a);
+//           a.click();
+//           document.body.removeChild(a);
+//           URL.revokeObjectURL(url);
+//         }
+//       } catch (error) {
+//         console.log(error);
+//       } finally {
+//         setIsDownloading(false);
+//       }
+//     }
+//   };
+
+//   const customerName = order?.user?.name || "";
+//   const deliveryAddress = order?.address ? formatAddress(order.address) : "";
+//   const deliveryDate = order?.deliveryOption
+//     ? new Date(
+//         new Date(order.createdAt).getTime() +
+//           order.deliveryOption.days * 24 * 60 * 60 * 1000
+//       ).toLocaleDateString()
+//     : "";
+
+//   const isBankTransfer = order.paymentMethod?.method === "Bank Transfer";
+
+//   return (
+//     <>
+//       {/* Download Button */}
+//       <Button
+//         className={`fixed bottom-8 right-8 z-50 bg-emerald-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-emerald-700 transition duration-200 ease-in-out flex items-center justify-center ${
+//           isDownloading ? "opacity-50 cursor-not-allowed" : ""
+//         }`}
+//         disabled={isDownloading}
+//         onClick={handleInvoiceDownload}
+//       >
+//         {isDownloading ? (
+//           <FaSpinner className="animate-spin mr-2" size={20} />
+//         ) : (
+//           <FaDownload className="mr-2" size={20} />
+//         )}
+//         {isDownloading ? "Downloading..." : "Download Invoice"}
+//       </Button>
+
+//       {/* Invoice Container */}
+//       <div
+//         ref={invoiceRef}
+//         className="pdf-invoice max-w-[800px] mx-auto p-6 bg-white shadow-lg rounded-lg"
+//       >
+//         {/* Header */}
+//         <div className="flex justify-between items-center mb-6">
+//           <Logo className="w-20 h-20" />
+//           <div className="text-right">
+//             <h1 className="text-2xl font-bold text-gray-700 mb-1">Invoice</h1>
+//             <p className="text-sm text-gray-600">
+//               Ceylon Grocery Latvia <br />
+//               Address: Ozolciema iela 40, Riga, Latvia <br />
+//               Phone: +371 2629 1271 | Email: support@ceylongrocery.lv
+//             </p>
+//           </div>
+//         </div>
+
+//         {/* Customer and Delivery Info */}
+//         <div className="text-sm text-gray-700 mb-6">
+//           <div>
+//             <span className="font-semibold">Invoice Number:</span>{" "}
+//             {order.invoice?.invoiceNumber}
+//           </div>
+//           {customerName && (
+//             <div>
+//               <span className="font-semibold">Customer Name:</span>{" "}
+//               {customerName}
+//             </div>
+//           )}
+//           {deliveryAddress && (
+//             <div>
+//               <span className="font-semibold">Delivery Address:</span>{" "}
+//               {deliveryAddress}
+//             </div>
+//           )}
+//           {deliveryDate && (
+//             <div>
+//               <span className="font-semibold">Expected Delivery Date:</span>{" "}
+//               {deliveryDate}
+//             </div>
+//           )}
+//         </div>
+
+//         {/* Payment Method */}
+//         {!isBankTransfer ? (
+//           <div className="mb-6 flex items-start space-x-4 border rounded-lg bg-yellow-50 p-4 shadow-sm">
+//             <div className="text-yellow-600 text-2xl">
+//               <FaMoneyBillWave />
+//             </div>
+//             <div>
+//               <h2 className="text-lg font-bold text-gray-800 underline decoration-yellow-500 mb-2">
+//                 Payment Method: Cash on Delivery
+//               </h2>
+//               <p className="text-sm text-gray-700 leading-relaxed">
+//                 Please have the total amount ready in cash upon delivery.
+//                 Payment will be collected at your doorstep.
+//               </p>
+//             </div>
+//           </div>
+//         ) : (
+//           <div className="mb-6">
+//             <h2 className="text-lg font-bold text-gray-800 mb-4">
+//               Bank Details
+//             </h2>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//               {order.paymentMethod?.bankAccounts?.map(
+//                 ({ id, bankName, accountName, accountNumber, bic }) => (
+//                   <div
+//                     key={id}
+//                     className="border rounded-lg bg-emerald-50 p-4 shadow-sm"
+//                   >
+//                     <div className="text-sm font-semibold text-neutral-900 mb-2">
+//                       {bankName}
+//                     </div>
+//                     <div className="text-sm text-gray-700">
+//                       <div className="flex justify-between">
+//                         <span>Acc Holder:</span>
+//                         <span className="font-medium">{accountName}</span>
+//                       </div>
+//                       <div className="flex justify-between">
+//                         <span>IBAN:</span>
+//                         <span className="font-medium">{accountNumber}</span>
+//                       </div>
+//                       {bic && (
+//                         <div className="flex justify-between">
+//                           <span>BIC:</span>
+//                           <span className="font-medium">{bic}</span>
+//                         </div>
+//                       )}
+//                     </div>
+//                   </div>
+//                 )
+//               )}
+//             </div>
+//             <p className="text-sm text-neutral-400 mt-2">
+//               Note: After the payment, please send a screenshot of the
+//               transaction.
+//             </p>
+//           </div>
+//         )}
+
+//         {/* Orders Table */}
+//         <div className="mb-6">
+//           <OrdersTable order={order} />
+//         </div>
+
+//         {/* Financial Summary */}
+//         <div className="flex justify-end">
+//           <div className="w-full md:w-1/3 bg-gray-50 p-4 rounded-lg shadow-sm">
+//             <div className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
+//               <span>Subtotal:</span>
+//               <span>€{decimalToNumber(order.subtotal)}</span>
+//             </div>
+//             <div className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
+//               <span>Delivery Cost:</span>
+//               <span>€{decimalToNumber(order.deliveryFee).toFixed(2)}</span>
+//             </div>
+//             <div className="flex justify-between text-lg font-bold text-emerald-600 border-t pt-2">
+//               <span>Total:</span>
+//               <span>
+//                 €{decimalToNumber(order.total)}
+//                 {isBankTransfer && (
+//                   <span className="text-sm ml-2 text-red-500">Pending</span>
+//                 )}
+//               </span>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Footer */}
+//         <div className="mt-8 text-center text-sm text-gray-600 border-t pt-4">
+//           <p className="text-lg font-semibold text-gray-800 mb-2">
+//             Thank you for shopping with Ceylon Grocery!
+//           </p>
+//           <p>
+//             For inquiries, contact us at{" "}
+//             <span className="text-emerald-600 font-medium">
+//               support@ceylongrocery.lv
+//             </span>
+//           </p>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Invoice;
