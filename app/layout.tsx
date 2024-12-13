@@ -11,8 +11,33 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Ceylong Grocery",
-  description: "Authentic Sri lankan grocery shop",
+  title: "Ceylon Grocery - Authentic Sri Lankan Grocery Shop",
+  description:
+    "Shop for fresh and authentic Sri Lankan groceries, spices, and ingredients. Fast delivery and excellent service in Latvia.",
+  keywords:
+    "Sri Lankan grocery, spices, authentic ingredients, Sri Lankan food, Ceylon Grocery, online grocery shop, Latvia",
+  openGraph: {
+    title: "Ceylon Grocery - Authentic Sri Lankan Grocery Shop",
+    description:
+      "Find fresh Sri Lankan groceries, spices, and authentic food items with fast delivery in Latvia.",
+    url: "https://www.ceylongrocery.lv",
+
+    siteName: "Ceylon Grocery",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Ceylon Grocery - Authentic Sri Lankan Groceries",
+      },
+    ],
+    type: "website",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+
+  metadataBase: new URL("https://www.ceylongrocery.lv"),
 };
 
 export default function RootLayout({
