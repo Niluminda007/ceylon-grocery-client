@@ -24,6 +24,9 @@ export async function GET(req: NextRequest) {
           mode: "insensitive",
         },
       },
+      include: {
+        category: true,
+      },
     });
     return NextResponse.json(results, { status: 200 });
   } catch (error) {

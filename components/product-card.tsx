@@ -19,8 +19,17 @@ interface ProductCardType {
 }
 
 const ProductCard = ({ product, tag }: ProductCardType) => {
-  const { id, name, price, images, slug, discounts, inStock, stockCount } =
-    product;
+  const {
+    id,
+    name,
+    price,
+    images,
+    slug,
+    discounts,
+    inStock,
+    stockCount,
+    category,
+  } = product;
   const [imageLoaded, setImageLoaded] = useState(false);
   const cartState = useCartStore();
 
@@ -76,6 +85,10 @@ const ProductCard = ({ product, tag }: ProductCardType) => {
 
   const pathName = usePathname();
 
+  const productURL = !pathName.includes("products")
+    ? `products/${category.slug}/${slug}`
+    : `${pathName}/${slug}`;
+
   return (
     <div
       className={`sm:w-[270px] relative z-0 bg-gray-900 shadow-lg hover:shadow-2xl flex flex-col justify-between transition-transform transform hover:scale-105 rounded-xl overflow-hidden m-4 ${
@@ -83,7 +96,7 @@ const ProductCard = ({ product, tag }: ProductCardType) => {
       }`}
       key={id}
     >
-      <Link href={`${pathName}/${slug}`}>
+      <Link href={productURL}>
         <div className="w-full h-[320px] overflow-hidden relative">
           {!imageLoaded && (
             <Skeleton className="absolute inset-0 w-[386px] h-[386px] rounded-lg bg-gray-800" />
@@ -115,15 +128,15 @@ const ProductCard = ({ product, tag }: ProductCardType) => {
         {discountedPrice < originalPrice ? (
           <div className="flex items-center gap-2">
             <p className="text-2xl font-bold text-[#5BFB23]">
-              ${discountedPrice.toFixed(2)}
+              €{discountedPrice.toFixed(2)}
             </p>
             <p className="text-lg font-semibold text-gray-400 line-through">
-              ${originalPrice}
+              €{originalPrice}
             </p>
           </div>
         ) : (
           <p className="text-2xl font-bold text-[#5BFB23]">
-            ${originalPrice.toFixed(2)}
+            €{originalPrice.toFixed(2)}
           </p>
         )}
         <p

@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
         products: {
           include: {
             discounts: true,
+            category: true,
           },
         },
       },

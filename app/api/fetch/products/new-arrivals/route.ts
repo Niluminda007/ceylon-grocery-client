@@ -10,6 +10,7 @@ export async function GET() {
       },
       include: {
         discounts: true,
+        category: true,
       },
       take: 10,
     });

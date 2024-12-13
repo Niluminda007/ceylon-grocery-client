@@ -12,6 +12,7 @@ export async function GET(
     const products = await db.product.findMany({
       take: 10,
       include: {
+        category: true,
         discounts: true,
         ratings: true,
         reviews: {

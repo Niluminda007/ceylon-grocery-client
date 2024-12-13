@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useSearchModal } from "@/hooks/use-search-modal";
 import { debounce } from "lodash";
+import { ExtendedProduct } from "@/types/product";
 
 export const SearchBar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,7 +37,7 @@ export const SearchBar = () => {
     isPending,
   } = useMutation({
     mutationKey: ["search"],
-    mutationFn: (keyWord: string): Promise<Product[]> =>
+    mutationFn: (keyWord: string): Promise<ExtendedProduct[]> =>
       fetcher({ url: "/fetch/products/search", params: { keyWord } }),
     onError: (error) => {
       toast.error(`Error: ${error.message}`);
@@ -104,7 +105,7 @@ export const SearchBar = () => {
           {data.map((product) => (
             <Link
               key={product.id}
-              href={`/products/${product.slug}`}
+              href={`/products/${product.category.slug}/${product.slug}`}
               onClick={onClose}
               className="w-full p-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 ease-in-out flex items-center"
             >
