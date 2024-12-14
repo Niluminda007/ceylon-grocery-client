@@ -84,15 +84,13 @@ body,
 /* Force Desktop PDF Rendering */
 
 @media print, screen {
-  .force-content-pdf {
-    width: 800px !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    background: white;
+  .pdf-invoice {
+    width: 800px;
+    overflow: visible;
   }
 
-  .force-content-pdf * {
-    box-sizing: border-box;
-    page-break-inside: avoid;
+  .pdf-invoice * {
+    page-break-inside: avoid !important;
+    page-break-before: auto !important;
   }
 }

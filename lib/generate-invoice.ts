@@ -37,7 +37,6 @@ export const generateInvoice = async (ref: RefObject<HTMLDivElement>) => {
     console.error("Error generating PDF:", error);
     return null;
   } finally {
-    // Remove the class to reset styles
     if (ref.current) ref.current.classList.remove("force-content-pdf");
   }
 };
