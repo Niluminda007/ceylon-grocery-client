@@ -10,7 +10,7 @@ import { fetcher } from "@/lib/fetcher";
 import Loader from "@/components/loader";
 import { ExtendedFeedback } from "@/types/feedback";
 import { FaStar } from "react-icons/fa";
-
+import Image from "next/image";
 const About = () => {
   const {
     data: feedbacks,
@@ -27,11 +27,18 @@ const About = () => {
       {/* Hero Section */}
       <div className="flex flex-col md:flex-row items-center gap-8 mb-12">
         <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 flex-shrink-0">
-          <Logo
+          <Image
+            className={`object-contain rounded-full`}
+            src="/ceylon-logo-full.jpg"
+            alt="logo"
+            height={256}
+            width={256}
+          />
+          {/* <Logo
             height={256}
             width={256}
             className="w-full h-full object-contain"
-          />
+          /> */}
         </div>
         <div className="flex flex-col text-center md:text-left max-w-2xl">
           <h1 className="text-5xl text-neutral-700 font-bold mb-4 hover:text-green-600 transition-colors duration-300">
