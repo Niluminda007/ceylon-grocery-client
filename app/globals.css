@@ -80,3 +80,19 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+/* Force Desktop PDF Rendering */
+@media print, screen {
+  .force-desktop-pdf {
+    width: 794px !important; /* Fixed width for A4 */
+    min-height: 1122px !important; /* A4 height at 72dpi */
+    margin: 0 auto !important;
+    font-size: 12px !important;
+    transform: scale(1) !important;
+  }
+
+  .force-desktop-pdf * {
+    box-sizing: border-box;
+    word-wrap: break-word;
+  }
+}
