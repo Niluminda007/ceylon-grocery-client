@@ -42,8 +42,9 @@ export const generateInvoice = async (ref: RefObject<HTMLDivElement>) => {
   try {
     if (!ref.current) return null;
 
-    // Add a temporary class for desktop styles
     ref.current.classList.add("force-desktop-pdf");
+    const element = ref.current;
+    const fullHeight = element.scrollHeight;
 
     const opt = {
       margin: [10, 10, 10, 10],
@@ -58,7 +59,7 @@ export const generateInvoice = async (ref: RefObject<HTMLDivElement>) => {
       },
       jsPDF: {
         unit: "pt",
-        format: "a4",
+        format: [element.offsetWidth, fullHeight],
         orientation: "portrait",
       },
     };
@@ -73,7 +74,6 @@ export const generateInvoice = async (ref: RefObject<HTMLDivElement>) => {
   } catch (error) {
     console.log(error);
   } finally {
-    // Remove the class after rendering
     if (ref.current) ref.current.classList.remove("force-desktop-pdf");
   }
 
