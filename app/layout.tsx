@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import NextTopLoader from "nextjs-toploader";
+import Script from "next/script";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -47,6 +48,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="80be6f1f-fc1e-4f01-891a-28dfb183c26d"
+          data-blockingmode="auto"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={poppins.className}>
         <SessionProvider>
           <NextTopLoader />
