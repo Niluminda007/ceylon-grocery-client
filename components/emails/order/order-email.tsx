@@ -151,7 +151,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 </Column>
                 <Column align="right">
                   <Text style={paragraph}>
-                    ${item.unitPrice.toFixed(2)} each - Subtotal: $
+                    €{item.unitPrice.toFixed(2)} each - Subtotal: €
                     {item.subTotal.toFixed(2)}
                   </Text>
                 </Column>
@@ -167,7 +167,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 </Text>
               </Column>
               <Column align="right">
-                <Text style={paragraph}>${order.subtotal.toFixed(2)}</Text>
+                <Text style={paragraph}>€{order.subtotal.toFixed(2)}</Text>
               </Column>
             </Row>
             <Row>
@@ -178,7 +178,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
               </Column>
               <Column align="right">
                 <Text style={paragraph}>
-                  -${order.totalDiscounts.toFixed(2)}
+                  -€{order.totalDiscounts.toFixed(2)}
                 </Text>
               </Column>
             </Row>
@@ -189,7 +189,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 </Text>
               </Column>
               <Column align="right">
-                <Text style={paragraph}>${order.deliveryFee.toFixed(2)}</Text>
+                <Text style={paragraph}>€{order.deliveryFee.toFixed(2)}</Text>
               </Column>
             </Row>
             <Row>
@@ -199,7 +199,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 </Text>
               </Column>
               <Column align="right">
-                <Text style={paragraph}>${order.total.toFixed(2)}</Text>
+                <Text style={paragraph}>€{order.total.toFixed(2)}</Text>
               </Column>
             </Row>
           </Section>

@@ -3,7 +3,6 @@ interface HomeLayoutProps {
 }
 
 const HomeLayout = ({ children }: HomeLayoutProps) => {
-  console.log("I rendered");
   return <>{children}</>;
 };
 

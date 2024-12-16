@@ -62,7 +62,8 @@ const CartProduct = ({ item }: CartProductProps) => {
               <FaEuroSign className="mr-1" /> {`${price}`} per unit
             </p>
             <p className="text-sm text-gray-700 flex items-center">
-              <FaEuroSign className="mr-1" /> {productCount * unitPrice} total
+              <FaEuroSign className="mr-1" />{" "}
+              {(productCount * unitPrice).toFixed(2)} total
             </p>
           </div>
         </div>

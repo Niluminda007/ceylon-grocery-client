@@ -40,7 +40,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       </div>
     );
   }
-  console.log(data);
+
   return (
     <div className="w-full flex flex-col min-h-screen p-6">
       <h1 className="p-6 text-5xl font-bold uppercase text-left mb-4">

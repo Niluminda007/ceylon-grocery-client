@@ -1,5 +1,5 @@
 import { CartItem } from "@/types/cart";
-import { Discount } from "@prisma/client";
+import { Discount, DiscountType } from "@prisma/client";
 import { create } from "zustand";
 
 type CartState = {
@@ -14,6 +14,8 @@ type CartState = {
   updateCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   setDiscount: (discount: Discount) => void;
+  removeDiscount: (discountType: DiscountType) => void;
+  clearAllDiscounts: () => void;
   clearCart: () => void;
 };
 
@@ -122,6 +124,18 @@ const useCartStore = create<CartState>((set) => ({
       }
       return state;
     }),
+  removeDiscount: (discountType) =>
+    set((state) => ({
+      ...state,
+      discounts: state.discounts.filter(
+        (discount) => discount.discountType !== discountType
+      ),
+    })),
+  clearAllDiscounts: () =>
+    set((state) => ({
+      ...state,
+      discounts: [],
+    })),
   clearCart: () =>
     set({
       cart: [],

@@ -14,7 +14,7 @@ const CartPaneItem = ({ item }: CartPaneItemProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <div className="flex flex-col sm:flex-row items-center gap-4 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
       <div className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-solid border-gray-300">
         {!imageLoaded && (
           <Skeleton className="absolute inset-0 w-full h-full rounded-lg bg-gray-200" />
@@ -34,9 +34,9 @@ const CartPaneItem = ({ item }: CartPaneItemProps) => {
           {quantity}
         </div>
       </div>
-      <div className="w-full flex justify-between">
-        <p className="text-base font-medium text-gray-800">{name}</p>
-        <p className="text-sm font-semibold text-gray-600">{`€${total.toFixed(
+      <div className="w-full flex flex-col sm:flex-row justify-between">
+        <p className="text-base font-medium text-gray-800 text-left ">{name}</p>
+        <p className="text-sm font-semibold text-gray-600 text-left ">{`€${total.toFixed(
           2
         )}`}</p>
       </div>

@@ -17,16 +17,18 @@ export const CheckOutControl = () => {
   const deliveryOption = useCheckOut((state) => state.data.deliveryOption);
   const discounts = useCartStore((state) => state.discounts);
   const setDiscount = useCartStore((state) => state.setDiscount);
+  const removeDiscount = useCartStore((state) => state.removeDiscount);
   const total = useCartStore((state) => state.total);
 
   const deliveryDiscountNotApplied =
     deliveryOption &&
+    deliveryOption.method !== "Express" &&
     total > DISCOUNT_THRESHOLD &&
-    discounts.findIndex((dis) => dis.discountType === DiscountType.DELIVERY) ==
+    discounts.findIndex((dis) => dis.discountType === DiscountType.DELIVERY) ===
       -1;
 
   const { data: fetchedDeliveryDiscount } = useQuery<Discount>({
-    queryKey: ["deliveryDiscount", deliveryDiscountNotApplied],
+    queryKey: ["deliveryDiscount"],
     queryFn: () =>
       fetcher({
         url: "/fetch/discounts",
@@ -38,14 +40,19 @@ export const CheckOutControl = () => {
   useEffect(() => {
     if (deliveryDiscountNotApplied && fetchedDeliveryDiscount) {
       setDiscount(fetchedDeliveryDiscount);
+    } else if (
+      deliveryOption?.method === "Express" ||
+      total <= DISCOUNT_THRESHOLD
+    ) {
+      removeDiscount(DiscountType.DELIVERY);
     }
-  }, [fetchedDeliveryDiscount, total]);
+  }, [fetchedDeliveryDiscount, deliveryOption, total, setDiscount]);
 
   useEffect(() => {
     if (totalItems === 0 && currentStage === "info") {
       router.replace("/");
     }
-  }, []);
+  }, [totalItems, currentStage, router]);
 
   return null;
 };

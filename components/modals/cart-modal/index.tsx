@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 import useCartStore from "@/hooks/use-cart";
-import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { AiOutlineShopping } from "react-icons/ai";
 import Link from "next/link";

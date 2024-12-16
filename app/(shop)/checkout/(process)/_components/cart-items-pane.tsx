@@ -72,6 +72,21 @@ const CartItemsPane = () => {
             {shouldShowDeliveryCost ? deliveryCost.toFixed(2) : deliveryMessage}
           </p>
         </div>
+
+        {shouldShowDeliveryCost && (
+          <div className="flex justify-between text-sm text-gray-600">
+            <span>Delivery Method</span>
+            <p>{deliveryOption.method}</p>
+          </div>
+        )}
+
+        {/* Conditional message for Express delivery */}
+        {deliveryOption && deliveryOption.method === "Express" && (
+          <div className="mt-2 text-sm text-red-500">
+            Free shipping is not applicable for Express delivery.
+          </div>
+        )}
+
         {discounts && (
           <div className="flex flex-col space-y-2">
             <span className="text-neutral-800 text-lg font-medium">

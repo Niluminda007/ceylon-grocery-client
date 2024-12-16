@@ -39,11 +39,13 @@ const DeliveryMethodPage = () => {
 
   useEffect(() => {
     if (activeDeliveryOptions && activeDeliveryOptions.length > 0) {
-      setData({
-        deliveryOption: activeDeliveryOptions.find(
-          (dOption) => dOption.method === "Standard"
-        ),
-      });
+      if (!deliveryOption) {
+        setData({
+          deliveryOption: activeDeliveryOptions.find(
+            (dOption) => dOption.method === "Standard"
+          ),
+        });
+      }
     }
   }, [deliveryOptions]);
 
@@ -54,10 +56,20 @@ const DeliveryMethodPage = () => {
     }
   }, [deliveryOption]);
 
-  const isEligibleForDeliveryDiscount = totalCartAmount > DISCOUNT_THRESHOLD;
+  /*
+  const [isEligibleForDeliveryDiscount, setIsEligibleForDeliveryDiscount] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    if (selectedDeliveryOption?.method === "Express") {
+      setIsEligibleForDeliveryDiscount(false);
+    } else {
+      setIsEligibleForDeliveryDiscount(totalCartAmount > DISCOUNT_THRESHOLD);
+    }
+  }, [selectedDeliveryOption, totalCartAmount]);
 
   const { data: fetchedDeliveryDiscount } = useQuery<Discount>({
-    queryKey: ["deliveryDiscount", isEligibleForDeliveryDiscount],
+    queryKey: ["deliveryDiscount"],
     queryFn: () =>
       fetcher({
         url: "/fetch/discounts",
@@ -67,11 +79,11 @@ const DeliveryMethodPage = () => {
   });
 
   useEffect(() => {
-    if (fetchedDeliveryDiscount) {
+    if (fetchedDeliveryDiscount && isEligibleForDeliveryDiscount) {
       setDiscount(fetchedDeliveryDiscount);
     }
-  }, [fetchedDeliveryDiscount]);
-
+  }, [fetchedDeliveryDiscount, isEligibleForDeliveryDiscount]);
+*/
   const handleSelectedDelivery = (deliveryOption: DeliveryOption) => {
     setSelectedDeliveryOption(deliveryOption);
   };
