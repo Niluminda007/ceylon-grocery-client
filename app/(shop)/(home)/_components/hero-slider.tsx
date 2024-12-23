@@ -1,12 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 import { slides } from "@/constants/slider";
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideCount = slides.length;
+
+  const slideInterval = 4000;
+  let interval: NodeJS.Timeout;
+
+  useEffect(() => {
+    startAutoSlide();
+    return () => clearInterval(interval);
+  }, [currentSlide]);
+
+  const startAutoSlide = () => {
+    interval = setInterval(() => {
+      nextSlide();
+    }, slideInterval);
+  };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slideCount);

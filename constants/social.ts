@@ -11,7 +11,7 @@ export const socialLinks = [
     src: "/social/instagram.png",
     alt: "Instagram",
     label: "@ceylongrocery.lv",
-    hoverColor: "hover:text-pink-600",
+    hoverColor: "hover:text-rose-500",
   },
   {
     href: "https://www.facebook.com/ceylongrocerylatvia",

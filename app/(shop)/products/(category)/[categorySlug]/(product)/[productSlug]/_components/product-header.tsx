@@ -49,23 +49,25 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         </h1>
 
         {/* Tags */}
-        <div className="mt-4 flex items-center gap-3">
-          {product.tags.map((tag, index) => (
-            <div
-              key={index}
-              className="px-3 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full shadow-sm"
-            >
-              {tag}
-            </div>
-          ))}
-        </div>
+        {product.tags.length > 1 && (
+          <div className="mt-4 flex items-center gap-3">
+            {product.tags.map((tag, index) => (
+              <div
+                key={index}
+                className="px-3 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full shadow-sm"
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Price */}
         <p className="text-4xl font-bold text-gray-700 mt-4">
           €{decimalToNumber(product.price).toFixed(2)}
         </p>
 
-        {/* Rating */}
+        {/* Rating
         <div className="flex items-center mt-6">
           <div className="flex items-center">
             {[...Array(5)].map((_, index) =>
@@ -79,7 +81,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
           <span className="ml-2 text-sm text-gray-600">
             ({product.reviews.length} reviews)
           </span>
-        </div>
+        </div> */}
 
         {/* Product Information */}
         <div className="mt-6 text-gray-800 space-y-2">

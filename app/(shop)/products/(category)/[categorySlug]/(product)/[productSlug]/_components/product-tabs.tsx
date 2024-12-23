@@ -16,11 +16,12 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
       <TabsList className="flex justify-center mb-6 bg-transparent rounded-lg p-1">
         <TabsTrigger
           value="details"
-          className="px-2 md:px-6 py-2 text-sm md:text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-gray-900 focus:outline-none focus:text-gray-900"
+          style={{ backgroundColor: "#cbd5e1" }}
+          className="px-2 md:px-6 py-2 text-sm md:text-lg font-medium text-gray-700  transition-colors duration-200 hover:text-gray-900 focus:outline-none focus:text-gray-900"
         >
-          Details
+          Product Description
         </TabsTrigger>
-        <TabsTrigger
+        {/* <TabsTrigger
           value="reviews"
           className="px-2 md:px-6 py-2 text-sm md:text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-gray-900 focus:outline-none focus:text-gray-900"
         >
@@ -31,17 +32,17 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
           className="px-2 md:px-6 py-2 text-sm md:text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-gray-900 focus:outline-none focus:text-gray-900"
         >
           Add Review
-        </TabsTrigger>
+        </TabsTrigger> */}
       </TabsList>
       <TabsContent value="details">
         <ProductDetails product={product} />
       </TabsContent>
-      <TabsContent value="reviews">
+      {/* <TabsContent value="reviews">
         <ProductReviews reviews={product.reviews} />
       </TabsContent>
       <TabsContent value="add_review">
         <AddReviewForm productId={product.id} />
-      </TabsContent>
+      </TabsContent> */}
     </Tabs>
   );
 };

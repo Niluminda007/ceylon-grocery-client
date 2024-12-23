@@ -3,15 +3,17 @@
 import React from "react";
 import Loader from "@/components/loader";
 import { fetcher } from "@/lib/fetcher";
-import { Order } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { OrdersHistoryTable } from "./_components/order-history-table";
 import { FaRedo, FaSadTear } from "react-icons/fa";
 import { GiCardboardBoxClosed } from "react-icons/gi";
 import { MdOutlineLocalShipping } from "react-icons/md";
+import { ExtendedOrder } from "@/types/order";
 
 const OrdersPage = () => {
-  const { data, isLoading, isFetching, error, refetch } = useQuery<Order[]>({
+  const { data, isLoading, isFetching, error, refetch } = useQuery<
+    ExtendedOrder[]
+  >({
     queryKey: ["orders"],
     queryFn: () => fetcher({ url: "/fetch/orders" }),
   });
@@ -63,8 +65,8 @@ const OrdersPage = () => {
             <div className="flex items-center space-x-3 bg-sky-700 p-4 rounded-lg shadow-lg">
               <MdOutlineLocalShipping className="h-8 w-8 text-yellow-400" />
               <span className="text-xl sm:text-2xl font-bold">
-                Delivered Orders:{" "}
-                {data.filter((order) => order.status === "DELIVERED").length}
+                Completed Orders:{" "}
+                {data.filter((order) => order.status === "COMPLETED").length}
               </span>
             </div>
           </div>

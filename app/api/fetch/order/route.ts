@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
           },
         },
         address: true,
+
         orderItems: {
           include: {
             product: true,

@@ -1,16 +1,17 @@
 import { decimalToNumber } from "@/lib/utils";
 import { columns, OrderHistoryItemRow } from "./columns";
-import { Order } from "@prisma/client";
 import { OrderHistoryDataTable } from "./order-history-data-table";
+import { ExtendedOrder } from "@/types/order";
 
 interface OrdersHistoryTableProps {
-  orders: Order[];
+  orders: ExtendedOrder[];
 }
 
 export const OrdersHistoryTable = ({ orders }: OrdersHistoryTableProps) => {
   const modifiedOrders: OrderHistoryItemRow[] = orders.map(
     ({
       id,
+      invoice,
       subtotal,
       deliveryFee,
       totalDiscounts,
@@ -19,6 +20,7 @@ export const OrdersHistoryTable = ({ orders }: OrdersHistoryTableProps) => {
       status,
     }) => ({
       id,
+      invoice_number: invoice?.invoiceNumber ? invoice.invoiceNumber : -1,
       subtotal: decimalToNumber(subtotal),
       deliveryFee: decimalToNumber(deliveryFee),
       totalDiscounts: decimalToNumber(totalDiscounts),

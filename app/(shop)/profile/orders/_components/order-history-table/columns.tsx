@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export type OrderHistoryItemRow = {
   id: string;
+  invoice_number: number;
   subtotal: number;
   deliveryFee: number;
   totalDiscounts: number;
@@ -20,8 +21,18 @@ export const columns: ColumnDef<OrderHistoryItemRow>[] = [
   {
     header: "Order Id",
     accessorKey: "id",
+    enableHiding: true,
     cell: ({ row }) => {
       const value = row.getValue("id") as string;
+      return <span className="font-semibold text-blue-700">{value}</span>;
+    },
+  },
+
+  {
+    header: "Invoice Number",
+    accessorKey: "invoice_number",
+    cell: ({ row }) => {
+      const value = row.getValue("invoice_number") as string;
       return <span className="font-semibold text-blue-700">{value}</span>;
     },
   },
@@ -42,7 +53,7 @@ export const columns: ColumnDef<OrderHistoryItemRow>[] = [
     cell: ({ row }) => {
       const value = row.getValue("subtotal") as number;
       return (
-        <span className="text-green-700 font-semibold">{`$${value.toFixed(
+        <span className="text-green-700 font-semibold">{`€${value.toFixed(
           2
         )}`}</span>
       );
@@ -53,7 +64,7 @@ export const columns: ColumnDef<OrderHistoryItemRow>[] = [
     accessorKey: "deliveryFee",
     cell: ({ row }) => {
       const value = row.getValue("deliveryFee") as number;
-      return <span className="text-red-600">{`$${value.toFixed(2)}`}</span>;
+      return <span className="text-red-600">{`€${value.toFixed(2)}`}</span>;
     },
   },
   {
@@ -61,7 +72,7 @@ export const columns: ColumnDef<OrderHistoryItemRow>[] = [
     accessorKey: "totalDiscounts",
     cell: ({ row }) => {
       const value = row.getValue("totalDiscounts") as number;
-      return <span className="text-gray-800">{`-$${value.toFixed(2)}`}</span>;
+      return <span className="text-gray-800">{`-€${value.toFixed(2)}`}</span>;
     },
   },
   {
@@ -81,7 +92,7 @@ export const columns: ColumnDef<OrderHistoryItemRow>[] = [
     cell: ({ row }) => {
       const value = row.getValue("total") as number;
       return (
-        <span className="font-bold text-gray-900">{`$${value.toFixed(
+        <span className="font-bold text-gray-900">{`€${value.toFixed(
           2
         )}`}</span>
       );

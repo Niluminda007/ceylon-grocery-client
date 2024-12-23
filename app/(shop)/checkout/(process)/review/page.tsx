@@ -62,13 +62,15 @@ const ReviewPage = () => {
       data.address &&
       data.deliveryOption &&
       data.paymentMethod &&
-      data.totals
+      data.totals &&
+      data.telephone
     ) {
       const order: CustomerOrder = {
         cartItems,
         totals: data.totals,
         discounts: discounts,
         address: data.address,
+        telephone: data.telephone,
         deliveryMethod: data.deliveryOption,
         paymentMethod: data.paymentMethod,
       };
@@ -88,6 +90,10 @@ const ReviewPage = () => {
         <div className="bg-gray-50 p-4 rounded-lg">
           <h2 className="text-xl font-semibold">Delivery Address</h2>
           {data.address && <p>{formatAddress(data.address)}</p>}
+        </div>
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h2 className="text-xl font-semibold">Contact Number</h2>
+          {data.telephone && <p>{data.telephone}</p>}
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
           <h2 className="text-xl font-semibold">Delivery Method</h2>

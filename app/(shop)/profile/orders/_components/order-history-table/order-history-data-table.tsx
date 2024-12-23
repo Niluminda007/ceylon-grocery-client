@@ -10,6 +10,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  VisibilityState,
 } from "@tanstack/react-table";
 
 import {
@@ -41,6 +42,10 @@ export function OrderHistoryDataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({
+      id: false,
+    });
   const table = useReactTable({
     data,
     columns,
@@ -53,8 +58,10 @@ export function OrderHistoryDataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
       pagination,
     },
+    onColumnVisibilityChange: setColumnVisibility,
     onPaginationChange: setPagination,
   });
 

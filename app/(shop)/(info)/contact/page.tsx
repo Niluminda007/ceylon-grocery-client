@@ -35,7 +35,7 @@ const Page = () => {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-center text-neutral-900 text-sm lg:text-lg font-semibold ${hoverColor} transition-colors duration-300`}
+            className={`text-center text-neutral-900 text-sm lg:text-lg font-semibold ${hoverColor}  transition-colors duration-300`}
           >
             <Image
               src={src}

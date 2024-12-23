@@ -32,6 +32,27 @@ export async function GET(req: NextRequest) {
       where: {
         userId: user.id,
       },
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+        address: true,
+        orderItems: {
+          include: {
+            product: true,
+          },
+        },
+        paymentMethod: {
+          include: {
+            bankAccounts: true,
+          },
+        },
+        deliveryOption: true,
+        discounts: true,
+        invoice: true,
+      },
     });
 
     if (orders.length === 0) {

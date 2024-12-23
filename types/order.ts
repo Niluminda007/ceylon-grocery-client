@@ -33,6 +33,7 @@ export type CustomerOrder = {
   cartItems: CartItem[];
   discounts: Discount[];
   totals: OrderTotals;
+  telephone: string;
   address: Address;
   deliveryMethod: DeliveryOption;
   paymentMethod: ExtendedPaymentMethod;

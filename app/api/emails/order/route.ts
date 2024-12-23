@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     await resend.emails.send({
       from: "admin@ceylongrocery.lv",
-      to: "vishwatharanadimantha@gmail.com",
+      to: "ceylongrocery.lv@gmail.com",
       subject: `New Order - #${order.id} - Customer - (${order.user.name})`,
       react: OrderEmail({ order, party: "ADMIN" }),
     });

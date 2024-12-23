@@ -7,6 +7,7 @@ import { OrderTotals } from "@/types/order";
 
 type CheckOutDataType = {
   // info?: z.infer<typeof CustomerInfoSchema>;
+  telephone?: string;
   address?: Address;
   deliveryOption?: DeliveryOption;
   paymentMethod?: ExtendedPaymentMethod;

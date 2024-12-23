@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     await resend.emails.send({
       from: "admin@ceylongrocery.lv",
-      to: "vishwatharanadimantha@gmail.com",
+      to: "ceylongrocery.lv@gmail.com",
       subject: "Inquirey Ceylong Grocery",
       react: ContactEmail({
         customerName: validatedFields.data.name,

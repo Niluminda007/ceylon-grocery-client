@@ -75,6 +75,7 @@ export async function POST(req: NextRequest) {
           paymentMethodId: order.paymentMethod.id,
           deliveryOptionId: order.deliveryMethod.id,
           addressId: order.address.id,
+          contactNumber: order.telephone,
           discounts: {
             connect: discounts,
           },

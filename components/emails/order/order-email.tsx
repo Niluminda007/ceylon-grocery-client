@@ -108,7 +108,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
               </Column>
               <Column align="right">
                 <Text style={paragraph}>
-                  {order.user.telephone || "Not provided"}
+                  {order.contactNumber || "Not provided"}
                 </Text>
               </Column>
             </Row>

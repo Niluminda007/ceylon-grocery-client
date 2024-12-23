@@ -44,7 +44,10 @@ const ViewOrderPage = ({ params: orderParams }: ViewOrderPageProps) => {
     <div className="flex flex-col space-y-8 p-8 min-h-screen bg-gradient-to-r ">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-6 rounded-xl shadow-md space-y-4 sm:space-y-0">
         <div className="text-lg sm:text-xl font-bold text-gray-800">
-          Order ID: <span className="text-emerald-500">#{order.id}</span>
+          Invoice Number:{" "}
+          <span className="text-emerald-500">
+            #{order.invoice?.invoiceNumber}
+          </span>
         </div>
         <div className="flex items-center space-x-3">
           <FaRegCheckCircle className="text-emerald-500 text-xl sm:text-2xl" />

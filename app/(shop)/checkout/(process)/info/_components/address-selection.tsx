@@ -19,8 +19,11 @@ import { useAddressModal } from "@/hooks/use-address-modal";
 import { useRouter } from "next/navigation";
 import useCheckOut from "@/hooks/use-checkout";
 import { formatAddress } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { UserDTO } from "@/types/user";
+import { toast } from "sonner";
 
-const AddressSelection = () => {
+const AddressForm = () => {
   const {
     data: addresses,
     isLoading,
@@ -30,7 +33,20 @@ const AddressSelection = () => {
     queryFn: () => fetcher({ url: "/fetch/addresses" }),
   });
 
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useQuery<UserDTO>({
+    queryKey: ["user-info"],
+    queryFn: () => fetcher({ url: "/fetch/user" }),
+  });
+
   const [selectedAddress, setSelectedAddress] = useState<Address>();
+  const [selectedTelephone, setSelectedTelephone] = useState<
+    string | undefined
+  >(undefined);
+  const [isInvalidPhone, setIsInvalidPhone] = useState(false);
   const router = useRouter();
 
   const { setData, completeStage, address, setStage } = useCheckOut(
@@ -42,65 +58,68 @@ const AddressSelection = () => {
     })
   );
 
-  const open = useAddressModal((state) => state.onOpen);
+  const openAddressModal = useAddressModal((state) => state.onOpen);
 
   const handleOnSelectAddress = (address: Address) => {
     setSelectedAddress(address);
   };
 
   const handleNextStage = () => {
-    if (selectedAddress) {
-      setData({ address: selectedAddress });
+    const phoneRegex = /^(\+?\d{1,3})?\d{6,12}$/;
+    if (
+      selectedAddress &&
+      selectedTelephone &&
+      phoneRegex.test(selectedTelephone)
+    ) {
+      setData({ address: selectedAddress, telephone: selectedTelephone });
       completeStage("info");
       router.push("/checkout/delivery");
+    } else {
+      setIsInvalidPhone(true);
+      toast.error("Please enter a valid telephone number");
     }
   };
 
   useEffect(() => {
     setStage("info");
-    if (address) {
-      setSelectedAddress(address);
-    }
-  }, []);
+    if (address) setSelectedAddress(address);
+    if (user && user.telephone) setSelectedTelephone(user.telephone);
+  }, [address, user, setStage]);
 
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-gradient-to-br from-white to-gray-100 rounded-xl shadow-2xl">
-      <h2 className="text-neutral-800 text-3xl font-bold mb-8">
-        Choose an Address or Create a New One
+    <div className="max-w-xl mx-auto p-8 bg-white rounded-xl shadow-lg border border-gray-200">
+      <h2 className="text-gray-800 text-3xl font-bold mb-6">
+        Select or Create an Address
       </h2>
 
-      <div className="flex flex-col space-y-4 mb-6">
-        <span className="text-neutral-600 font-semibold text-lg">
+      {/* Address Dropdown */}
+      <div className="mb-6">
+        <label className="block text-gray-600 font-semibold mb-2">
           Address List
-        </span>
+        </label>
         {isLoading && <Loader text="Loading addresses..." />}
-        {error && (
-          <div className="text-sm text-red-500 font-semibold">
-            {error.message}
-          </div>
-        )}
+        {error && <p className="text-red-500">{error.message}</p>}
         {!isLoading && addresses && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div
-                role="button"
-                className="w-full px-5 py-3 text-left bg-white border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow duration-200"
-              >
-                {selectedAddress
-                  ? formatAddress(selectedAddress)
-                  : "Select an Address"}
-                <ChevronDown className="ml-2 text-gray-500" />
-              </div>
+              <button className="w-full px-4 py-3 text-left bg-gray-50 border rounded-lg shadow-sm hover:shadow-md transition flex items-center justify-between">
+                <span>
+                  {selectedAddress
+                    ? formatAddress(selectedAddress)
+                    : "Select an Address"}
+                </span>
+                <ChevronDown className="w-5 h-5 ml-2 text-gray-500" />
+              </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="max-h-60 overflow-y-auto mt-2 rounded-lg shadow-lg bg-white border border-gray-200">
-              <DropdownMenuLabel className="text-gray-600 font-semibold">
+            <DropdownMenuContent className="max-h-60 overflow-y-auto mt-1 rounded-lg shadow-lg bg-white border">
+              <DropdownMenuLabel className="text-gray-700 font-semibold px-4 py-2">
                 Select an Address
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               {addresses.map((address) => (
                 <DropdownMenuItem
                   key={address.id}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-700"
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleOnSelectAddress(address)}
                 >
                   {formatAddress(address)}
@@ -110,27 +129,49 @@ const AddressSelection = () => {
           </DropdownMenu>
         )}
       </div>
-      <div className="flex flex-col space-y-4">
-        <span className="text-neutral-600 font-semibold">Add an Address</span>
+
+      {/* Add Address Button */}
+      <div className="mb-6 flex items-center gap-4">
+        <span className="text-gray-600 font-semibold">Add New Address</span>
         <Button
           variant="outline"
           size="lg"
-          className="flex items-center justify-center border-gray-300 text-sky-600 hover:border-sky-600 hover:bg-sky-50 transition-colors duration-200"
-          onClick={open}
+          className="flex items-center border-gray-300 text-blue-600 hover:border-blue-600 hover:bg-blue-50 transition"
+          onClick={openAddressModal}
         >
-          <PlusIcon className="w-6 h-6 mr-2" />
-          Add New Address
+          <PlusIcon className="w-5 h-5 mr-2" />
+          Add Address
         </Button>
       </div>
+
+      {/* Telephone Input */}
+      <div className="space-y-4 mt-6">
+        <span className="text-gray-600 font-semibold">Telephone Number</span>
+        <p className="text-gray-500 text-sm">e.g. +123 4567890 or 4567890</p>
+        <Input
+          type="tel"
+          placeholder="Enter your phone number"
+          value={selectedTelephone}
+          onChange={(e) => {
+            setSelectedTelephone(e.target.value);
+            setIsInvalidPhone(false);
+          }}
+          className={`w-full rounded-lg placeholder-gray-400 text-gray-800 ${
+            isInvalidPhone ? "border-red-500" : ""
+          }`}
+        />
+      </div>
+
+      {/* Continue Button */}
       <Button
-        disabled={!selectedAddress}
+        disabled={!selectedAddress || !selectedTelephone}
         onClick={handleNextStage}
-        className="mt-4 w-full p-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:bg-indigo-300"
+        className="mt-6 w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300"
       >
-        Next
+        Continue
       </Button>
     </div>
   );
 };
 
-export default AddressSelection;
+export default AddressForm;

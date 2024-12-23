@@ -44,6 +44,7 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
   const customerName = order && order.user ? order.user.name : "";
   const deliveryAddress =
     order && order.address ? formatAddress(order.address) : "";
+  const contactNumber = order && order.contactNumber ? order.contactNumber : "";
 
   const deliveryDate =
     order &&
@@ -99,6 +100,14 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
                 <div className="mt-2">
                   <span className="font-semibold">Delivery Address: </span>
                   {deliveryAddress}
+                </div>
+              )}
+              {contactNumber !== "" && (
+                <div className="mt-2">
+                  <span className="font-semibold">
+                    Customer Contact Number:{" "}
+                  </span>
+                  {order.contactNumber}
                 </div>
               )}
               {deliveryDate && (
