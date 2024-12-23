@@ -108,9 +108,8 @@ const ProductCard = ({ product, tag }: ProductCardType) => {
             width="386"
             height="386"
             format="webp"
-            quality="50"
+            quality="10"
             loading={name === "Chili Powder" ? "eager" : "lazy"}
-            sizes="(max-width: 480px) 100vw, 50vw"
             priority={name === "Chili Powder"}
             onLoad={() => setImageLoaded(true)}
           />
