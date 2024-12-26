@@ -10,7 +10,7 @@ export const Header = ({ label }: HeaderProps) => {
       <div className="flex items-center justify-center space-x-2">
         <Logo />
         <span className="block md:hidden text-sm font-medium">
-          Ceylong Grocery
+          Ceylon Grocery
         </span>
       </div>
       <p className="text-muted-foreground">{label}</p>
