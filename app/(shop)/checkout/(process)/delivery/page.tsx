@@ -113,33 +113,35 @@ const DeliveryMethodPage = () => {
       )}
       <div className="flex flex-col space-y-4">
         {activeDeliveryOptions &&
-          activeDeliveryOptions.map((dOption, index) => (
-            <div
-              key={index}
-              className={`${
-                dOption.id === selectedDeliveryOption?.id
-                  ? "bg-blue-100 border-blue-300"
-                  : "bg-gray-50"
-              } flex justify-between items-center p-5 rounded-lg border cursor-pointer transition transform hover:scale-105 duration-200`}
-              role="button"
-              onClick={() => handleSelectedDelivery(dOption)}
-            >
-              <div className="flex flex-col">
-                <span className="text-xl text-neutral-800 font-semibold">
-                  {dOption.method}
-                </span>
-                <span className="text-sm text-neutral-600">
-                  {dOption.description}
-                </span>
-                <span className="text-sm text-neutral-500 mt-1">
-                  Delivery by: {calculateDeliveryDate(dOption.days)}
+          activeDeliveryOptions.map((dOption, index) => {
+            return (
+              <div
+                key={index}
+                className={`${
+                  dOption.id === selectedDeliveryOption?.id
+                    ? "bg-blue-100 border-blue-300"
+                    : "bg-gray-50"
+                } flex justify-between items-center p-5 rounded-lg border cursor-pointer transition transform hover:scale-105 duration-200`}
+                role="button"
+                onClick={() => handleSelectedDelivery(dOption)}
+              >
+                <div className="flex flex-col">
+                  <span className="text-xl text-neutral-800 font-semibold">
+                    {dOption.method}
+                  </span>
+                  <span className="text-sm text-neutral-600">
+                    {dOption.description}
+                  </span>
+                  <span className="text-sm text-neutral-500 mt-1">
+                    Delivery by: {calculateDeliveryDate(dOption.days)}
+                  </span>
+                </div>
+                <span className="text-xl text-neutral-900 font-semibold">
+                  €{decimalToNumber(dOption.cost).toFixed(2)}
                 </span>
               </div>
-              <span className="text-xl text-neutral-900 font-semibold">
-                €{decimalToNumber(dOption.cost).toFixed(2)}
-              </span>
-            </div>
-          ))}
+            );
+          })}
         <Button
           className="w-full p-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:bg-indigo-300"
           onClick={handleDeliverySubmit}

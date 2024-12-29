@@ -5,6 +5,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -56,8 +57,17 @@ export default function RootLayout({
           data-blockingmode="auto"
           strategy="beforeInteractive"
         />
+        <GoogleTagManager gtmId="GTM-K5GBRSLB" />
       </head>
       <body className={poppins.className}>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-K5GBRSLB"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
         <SessionProvider>
           <NextTopLoader />
           <Toaster />
