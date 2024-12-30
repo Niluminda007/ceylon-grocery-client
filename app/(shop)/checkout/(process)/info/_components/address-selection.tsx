@@ -43,9 +43,7 @@ const AddressForm = () => {
   });
 
   const [selectedAddress, setSelectedAddress] = useState<Address>();
-  const [selectedTelephone, setSelectedTelephone] = useState<
-    string | undefined
-  >(undefined);
+  const [selectedTelephone, setSelectedTelephone] = useState<string>("");
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
   const router = useRouter();
 

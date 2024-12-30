@@ -11,6 +11,7 @@ import { DeliveryOption, Discount, DiscountType } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaTag } from "react-icons/fa";
 
 const DeliveryMethodPage = () => {
   const router = useRouter();
@@ -102,6 +103,13 @@ const DeliveryMethodPage = () => {
     }
   };
 
+  const [isEligibleForDeliveryDiscount, setIsEligibleForDeliveryDiscount] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    setIsEligibleForDeliveryDiscount(totalCartAmount >= DISCOUNT_THRESHOLD);
+  }, [totalCartAmount]);
+
   return (
     <div className="w-full mx-auto flex flex-col space-y-6 bg-white rounded-lg p-6">
       <h1 className="text-3xl text-neutral-900 font-bold mb-6">
@@ -114,6 +122,9 @@ const DeliveryMethodPage = () => {
       <div className="flex flex-col space-y-4">
         {activeDeliveryOptions &&
           activeDeliveryOptions.map((dOption, index) => {
+            const showFreeDeliveryForStandard =
+              isEligibleForDeliveryDiscount && dOption.method === "Standard";
+
             return (
               <div
                 key={index}
@@ -136,8 +147,17 @@ const DeliveryMethodPage = () => {
                     Delivery by: {calculateDeliveryDate(dOption.days)}
                   </span>
                 </div>
-                <span className="text-xl text-neutral-900 font-semibold">
+                <span
+                  className={`${
+                    showFreeDeliveryForStandard ? "line-through" : ""
+                  } text-xl text-neutral-900 font-semibold relative`}
+                >
                   €{decimalToNumber(dOption.cost).toFixed(2)}
+                  {showFreeDeliveryForStandard && (
+                    <small className="absolute right-0 bottom-4 text-red-500">
+                      € 0.00
+                    </small>
+                  )}
                 </span>
               </div>
             );
