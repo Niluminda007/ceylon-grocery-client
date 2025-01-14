@@ -1,5 +1,5 @@
 import { colors } from "@/constants/colors";
-import { Address } from "@prisma/client";
+import { Address, Order } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { Decimal } from "decimal.js";
 import { twMerge } from "tailwind-merge";
@@ -88,3 +88,27 @@ export function slugify(text: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
+
+// Generates a random alphanumeric suffix
+export const generateRandomSuffix = (length = 3) => {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
+// Generates a custom order ID
+export const generateOrderId = (orderCount: number) => {
+  const sequenceNumber = orderCount + 1;
+
+  const totalOrders = sequenceNumber.toString().length;
+  const paddingLength = Math.max(3, totalOrders);
+
+  const formattedNumber = String(sequenceNumber).padStart(paddingLength, "0");
+
+  const randomSuffix = generateRandomSuffix();
+
+  return `CG${formattedNumber}${randomSuffix}`;
+};

@@ -26,6 +26,16 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
 
   const invoiceUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/profile/orders/${order.id}/invoice`;
 
+  const calculateDeliveryDate = (
+    orderedDate: Date,
+    deliveryDays: number
+  ): string => {
+    const deliveryDate = new Date(orderedDate.getTime());
+    deliveryDate.setDate(deliveryDate.getDate() + deliveryDays);
+
+    return deliveryDate.toLocaleDateString();
+  };
+
   return (
     <Html>
       <Head />
@@ -52,7 +62,17 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 </Text>
               </Column>
               <Column align="right">
-                <Text style={paragraph}>{order.id}</Text>
+                <Text style={paragraph}>{order.orderId}</Text>
+              </Column>
+            </Row>
+            <Row>
+              <Column align="left">
+                <Text style={paragraph}>
+                  <strong>Invoice Number:</strong>
+                </Text>
+              </Column>
+              <Column align="right">
+                <Text style={paragraph}>{order.invoice?.invoiceNumber}</Text>
               </Column>
             </Row>
             <Row>
@@ -100,6 +120,24 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 <Text style={paragraph}>{order.user.email}</Text>
               </Column>
             </Row>
+            {party === "ADMIN" && (
+              <Row>
+                <Column align="left">
+                  <Text style={paragraph}>
+                    <strong>Delivery Date:</strong>
+                  </Text>
+                </Column>
+                <Column align="right">
+                  <Text style={paragraph}>
+                    {calculateDeliveryDate(
+                      order.orderDate,
+                      order.deliveryOption ? order.deliveryOption.days : 0
+                    )}
+                  </Text>
+                </Column>
+              </Row>
+            )}
+
             <Row>
               <Column align="left">
                 <Text style={paragraph}>

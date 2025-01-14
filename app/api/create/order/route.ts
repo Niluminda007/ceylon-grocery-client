@@ -1,6 +1,7 @@
 import { getUserByID } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { generateOrderId } from "@/lib/utils";
 import { CartItem } from "@/types/cart";
 import { CustomerOrder } from "@/types/order";
 import { NextRequest, NextResponse } from "next/server";
@@ -61,9 +62,12 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      const orderCount = await prisma.order.count();
+
       const createdOrder = await prisma.order.create({
         data: {
           userId: user.id as string,
+          orderId: generateOrderId(orderCount),
           orderDate: new Date(),
           subtotal: order.totals.subTotal,
           totalDiscounts: order.totals.totalDiscount,
