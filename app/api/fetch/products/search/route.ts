@@ -6,10 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    /*
     const user = await currentUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthenticated" }, { status: 401 });
     }
+      */
     const keyWord = req.nextUrl.searchParams.get("keyWord");
     if (!keyWord) {
       return NextResponse.json(

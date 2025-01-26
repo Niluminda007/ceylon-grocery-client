@@ -6,11 +6,13 @@ import { db } from "@/lib/db";
 
 export async function GET(req: NextRequest) {
   try {
+    /*
     const user = await currentUser();
     if (!user || !user.id) {
       return NextResponse.json({ message: "Unauthorized!!!" }, { status: 401 });
     }
-
+*/
+    console.log("hello");
     const feedbacks = await db.feedback.findMany({
       include: {
         user: {

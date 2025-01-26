@@ -11,6 +11,7 @@ import Loader from "@/components/loader";
 import { ExtendedFeedback } from "@/types/feedback";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";
+import { damp } from "three/src/math/MathUtils.js";
 const About = () => {
   const {
     data: feedbacks,

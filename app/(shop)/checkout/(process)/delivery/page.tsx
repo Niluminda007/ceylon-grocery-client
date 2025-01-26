@@ -143,9 +143,11 @@ const DeliveryMethodPage = () => {
                   <span className="text-sm text-neutral-600">
                     {dOption.description}
                   </span>
-                  <span className="text-sm text-neutral-500 mt-1">
-                    Delivery by: {calculateDeliveryDate(dOption.days)}
-                  </span>
+                  {dOption.method !== "Pick up myself" && (
+                    <span className="text-sm text-neutral-500 mt-1">
+                      Delivery by: {calculateDeliveryDate(dOption.days)}
+                    </span>
+                  )}
                 </div>
                 <span
                   className={`${

@@ -1,4 +1,5 @@
 import { ExtendedOrder } from "@/types/order";
+import { DeliveryOption, Order } from "@prisma/client";
 import {
   Body,
   Container,
@@ -28,11 +29,33 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
 
   const calculateDeliveryDate = (
     orderedDate: Date,
-    deliveryDays: number
+    deliveryOption: DeliveryOption
   ): string => {
-    const deliveryDate = new Date(orderedDate.getTime());
-    deliveryDate.setDate(deliveryDate.getDate() + deliveryDays);
+    const isExpress = deliveryOption.method === "Express";
+    let deliveryDate: Date;
 
+    if (isExpress) {
+      // Express delivery means the same day
+      deliveryDate = new Date(orderedDate.getTime());
+    } else {
+      const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+      const daysUntilNextDelivery: any = {
+        0: 1, // Sunday -> Monday
+        1: 3, // Monday -> Thursday
+        2: 2, // Tuesday -> Thursday
+        3: 4, // Wednesday -> Monday
+        4: 4, // Thursday -> Monday
+        5: 3, // Friday -> Monday
+        6: 2, // Saturday -> Monday
+      };
+
+      // Calculate the delivery date
+      deliveryDate = new Date(
+        orderedDate.getTime() + daysUntilNextDelivery[day] * 24 * 60 * 60 * 1000
+      );
+    }
+
+    // Return the delivery date as a formatted string
     return deliveryDate.toLocaleDateString();
   };
 
@@ -127,14 +150,16 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                     <strong>Delivery Date:</strong>
                   </Text>
                 </Column>
-                <Column align="right">
-                  <Text style={paragraph}>
-                    {calculateDeliveryDate(
-                      order.orderDate,
-                      order.deliveryOption ? order.deliveryOption.days : 0
-                    )}
-                  </Text>
-                </Column>
+                {order.deliveryOption?.method !== "Pick up myself" && (
+                  <Column align="right">
+                    <Text style={paragraph}>
+                      {calculateDeliveryDate(
+                        order.orderDate,
+                        order.deliveryOption!
+                      )}
+                    </Text>
+                  </Column>
+                )}
               </Row>
             )}
 
@@ -211,6 +236,16 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
             <Row>
               <Column align="left">
                 <Text style={paragraph}>
+                  <strong>Delivery Fee:</strong>
+                </Text>
+              </Column>
+              <Column align="right">
+                <Text style={paragraph}>€{order.deliveryFee.toFixed(2)}</Text>
+              </Column>
+            </Row>
+            <Row>
+              <Column align="left">
+                <Text style={paragraph}>
                   <strong>Total Discounts:</strong>
                 </Text>
               </Column>
@@ -220,16 +255,7 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                 </Text>
               </Column>
             </Row>
-            <Row>
-              <Column align="left">
-                <Text style={paragraph}>
-                  <strong>Delivery Fee:</strong>
-                </Text>
-              </Column>
-              <Column align="right">
-                <Text style={paragraph}>€{order.deliveryFee.toFixed(2)}</Text>
-              </Column>
-            </Row>
+
             <Row>
               <Column align="left">
                 <Text style={paragraph}>

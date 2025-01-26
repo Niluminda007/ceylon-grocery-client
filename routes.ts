@@ -3,7 +3,14 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes: string[] = [];
+export const publicRoutes: string[] = [
+  "/", // Home page
+  "/products",
+  "/categories", // Categories page
+  "/about", // About page
+  "/contact", // Contact page
+  "/api/fetch",
+];
 
 /**
  * An array of routes that are used for authentication
@@ -27,3 +34,11 @@ export const apiAuthPrefix: string = "/api/auth";
  */
 
 export const DEFAULT_LOGIN_REDIRECT: string = "/";
+
+export const checkoutRoutes = [
+  "/checkout/info", // Checkout information page
+  "/checkout/delivery", // Delivery options
+  "/checkout/payment", // Payment options
+  "/checkout/review", // Order review page
+  "/checkout/complete", // Order completion/confirmation page
+];

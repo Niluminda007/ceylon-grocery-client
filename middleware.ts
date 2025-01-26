@@ -5,6 +5,7 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
+  checkoutRoutes,
   publicRoutes,
 } from "@/routes";
 
@@ -15,12 +16,22 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.some((route) =>
+    nextUrl.pathname.startsWith(route)
+  );
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isCheckoutRoute = checkoutRoutes.some((route) =>
+    nextUrl.pathname.startsWith(route)
+  );
 
   if (isApiAuthRoute) {
     return;
   }
+  // Redirect to login only for checkout-related routes if the user isn't logged in
+  if (isCheckoutRoute && !isLoggedIn) {
+    return Response.redirect(new URL("/auth/login", nextUrl));
+  }
+
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
