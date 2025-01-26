@@ -1,5 +1,5 @@
 import { ExtendedOrder } from "@/types/order";
-import { DeliveryOption, Order } from "@prisma/client";
+import { DeliveryOption } from "@prisma/client";
 import {
   Body,
   Container,
@@ -150,16 +150,18 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
                     <strong>Delivery Date:</strong>
                   </Text>
                 </Column>
-                {order.deliveryOption?.method !== "Pick up myself" && (
+                {
                   <Column align="right">
                     <Text style={paragraph}>
-                      {calculateDeliveryDate(
-                        order.orderDate,
-                        order.deliveryOption!
-                      )}
+                      {order.deliveryOption?.method !== "Pick up myself"
+                        ? calculateDeliveryDate(
+                            order.orderDate,
+                            order.deliveryOption!
+                          )
+                        : "Customer will pick it up (Wednesday and Saturday)"}
                     </Text>
                   </Column>
-                )}
+                }
               </Row>
             )}
 
