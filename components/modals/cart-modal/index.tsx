@@ -126,7 +126,11 @@ const CartModal = () => {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction>
-                            <Link href="/auth/login" onClick={onClose}>
+                            <Link
+                              href="/auth/login"
+                              onClick={onClose}
+                              className="w-full"
+                            >
                               Log In
                             </Link>
                           </AlertDialogAction>
