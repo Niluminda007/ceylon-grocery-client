@@ -1,5 +1,5 @@
 import { colors } from "@/constants/colors";
-import { Address, Order } from "@prisma/client";
+import { Address, DeliveryOption, Order } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { Decimal } from "decimal.js";
 import { twMerge } from "tailwind-merge";
@@ -111,4 +111,41 @@ export const generateOrderId = (orderCount: number) => {
   const randomSuffix = generateRandomSuffix();
 
   return `CG${formattedNumber}${randomSuffix}`;
+};
+
+// Calculate Delivery Date
+export const calculateDeliveryDate = (
+  orderedDate: Date,
+  deliveryOption: DeliveryOption
+): string => {
+  console.log(orderedDate);
+  if (!orderedDate || isNaN(orderedDate.getTime())) {
+    return "Invalid orderedDate provided";
+  }
+  const isExpress = deliveryOption.method === "Express";
+  let deliveryDate: Date;
+
+  if (isExpress) {
+    // Express delivery means the same day
+    deliveryDate = new Date(orderedDate.getTime());
+  } else {
+    const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    const daysUntilNextDelivery: any = {
+      0: 1, // Sunday -> Monday
+      1: 3, // Monday -> Thursday
+      2: 2, // Tuesday -> Thursday
+      3: 4, // Wednesday -> Monday
+      4: 4, // Thursday -> Monday
+      5: 3, // Friday -> Monday
+      6: 2, // Saturday -> Monday
+    };
+
+    // Calculate the delivery date
+    deliveryDate = new Date(
+      orderedDate.getTime() + daysUntilNextDelivery[day] * 24 * 60 * 60 * 1000
+    );
+  }
+
+  // Return the delivery date as a formatted string
+  return deliveryDate.toLocaleDateString();
 };

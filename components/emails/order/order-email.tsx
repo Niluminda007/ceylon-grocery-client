@@ -1,3 +1,4 @@
+import { calculateDeliveryDate } from "@/lib/utils";
 import { ExtendedOrder } from "@/types/order";
 import { DeliveryOption } from "@prisma/client";
 import {
@@ -27,37 +28,37 @@ export const OrderEmail = ({ order, party }: OrderEmailProps) => {
 
   const invoiceUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/profile/orders/${order.id}/invoice`;
 
-  const calculateDeliveryDate = (
-    orderedDate: Date,
-    deliveryOption: DeliveryOption
-  ): string => {
-    const isExpress = deliveryOption.method === "Express";
-    let deliveryDate: Date;
+  // const calculateDeliveryDate = (
+  //   orderedDate: Date,
+  //   deliveryOption: DeliveryOption
+  // ): string => {
+  //   const isExpress = deliveryOption.method === "Express";
+  //   let deliveryDate: Date;
 
-    if (isExpress) {
-      // Express delivery means the same day
-      deliveryDate = new Date(orderedDate.getTime());
-    } else {
-      const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-      const daysUntilNextDelivery: any = {
-        0: 1, // Sunday -> Monday
-        1: 3, // Monday -> Thursday
-        2: 2, // Tuesday -> Thursday
-        3: 4, // Wednesday -> Monday
-        4: 4, // Thursday -> Monday
-        5: 3, // Friday -> Monday
-        6: 2, // Saturday -> Monday
-      };
+  //   if (isExpress) {
+  //     // Express delivery means the same day
+  //     deliveryDate = new Date(orderedDate.getTime());
+  //   } else {
+  //     const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  //     const daysUntilNextDelivery: any = {
+  //       0: 1, // Sunday -> Monday
+  //       1: 3, // Monday -> Thursday
+  //       2: 2, // Tuesday -> Thursday
+  //       3: 4, // Wednesday -> Monday
+  //       4: 4, // Thursday -> Monday
+  //       5: 3, // Friday -> Monday
+  //       6: 2, // Saturday -> Monday
+  //     };
 
-      // Calculate the delivery date
-      deliveryDate = new Date(
-        orderedDate.getTime() + daysUntilNextDelivery[day] * 24 * 60 * 60 * 1000
-      );
-    }
+  //     // Calculate the delivery date
+  //     deliveryDate = new Date(
+  //       orderedDate.getTime() + daysUntilNextDelivery[day] * 24 * 60 * 60 * 1000
+  //     );
+  //   }
 
-    // Return the delivery date as a formatted string
-    return deliveryDate.toLocaleDateString();
-  };
+  //   // Return the delivery date as a formatted string
+  //   return deliveryDate.toLocaleDateString();
+  // };
 
   return (
     <Html>

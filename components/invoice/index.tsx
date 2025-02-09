@@ -3,7 +3,11 @@ import { FC, useRef, useState } from "react";
 import Image from "next/image";
 import { FaDownload, FaMoneyBillWave, FaSpinner } from "react-icons/fa";
 import { ExtendedOrder } from "@/types/order";
-import { decimalToNumber, formatAddress } from "@/lib/utils";
+import {
+  calculateDeliveryDate,
+  decimalToNumber,
+  formatAddress,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { OrdersTable } from "./orders-table";
 import { generateInvoice } from "@/lib/generate-invoice";
@@ -47,12 +51,16 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
   const contactNumber = order && order.contactNumber ? order.contactNumber : "";
 
   const deliveryDate =
-    order &&
+    order.deliveryOption?.method !== "Pick up myself"
+      ? calculateDeliveryDate(order.orderDate, order.deliveryOption!)
+      : "Graudu iela 30(Wednesday and Saturday)";
+
+  const deliveryText =
     order.deliveryOption &&
-    new Date(
-      new Date(order.createdAt).getTime() +
-        order.deliveryOption.days * 24 * 60 * 60 * 1000
-    ).toLocaleDateString();
+    order.deliveryOption.method !== "Pick up myself" &&
+    (order.deliveryOption.method === "Express"
+      ? "(Within 24 hours)"
+      : "(Monday & Thursday 8pm to 10pm)");
 
   const isBankTransfer = order.paymentMethod?.method === "Bank Transfer";
 
@@ -118,12 +126,7 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
                   {deliveryDate}
                 </div>
               )}
-              <div>
-                {order.deliveryOption &&
-                  (order.deliveryOption.method === "Express"
-                    ? "(Within 24 hours)"
-                    : "(Monday & Thursday 8pm to 10pm)")}
-              </div>
+              <div>{deliveryText}</div>
 
               <div>
                 <span className="font-semibold">Invoice Date: </span>

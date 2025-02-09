@@ -47,21 +47,23 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
     }
+    const customerName = order.user.name || "Unknown Customer";
 
     await resend.emails.send({
-      from: "admin@ceylongrocery.lv",
+      from: "Ceylon Grocery Admin <admin@ceylongrocery.lv>",
       to: "ceylongrocery.lv@gmail.com",
-      subject: `New Order - #${order.id} - Customer - (${order.user.name})`,
+      subject: `New Order Received: #${order.orderId} from ${customerName}`,
       react: OrderEmail({ order, party: "ADMIN" }),
     });
 
     if (order.user.email) {
+      const userName = order.user.name || order.user.firstName || "Customer";
+      const subject = `Thank you for your order, ${userName}!`;
+
       await resend.emails.send({
-        from: "admin@ceylongrocery.lv",
+        from: "Ceylon Grocery <admin@ceylongrocery.lv>",
         to: order.user.email,
-        subject: `Thank you for your order - ${
-          order.user.name || order.user.firstName
-        }`,
+        subject,
         react: OrderEmail({ order, party: "USER" }),
       });
     }
