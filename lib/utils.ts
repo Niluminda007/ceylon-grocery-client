@@ -118,7 +118,9 @@ export const calculateDeliveryDate = (
   orderedDate: Date,
   deliveryOption: DeliveryOption
 ): string => {
-  console.log(orderedDate);
+  if (typeof orderedDate === "string") {
+    orderedDate = new Date(orderedDate);
+  }
   if (!orderedDate || isNaN(orderedDate.getTime())) {
     return "Invalid orderedDate provided";
   }

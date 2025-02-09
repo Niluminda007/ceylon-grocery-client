@@ -50,17 +50,23 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
     order && order.address ? formatAddress(order.address) : "";
   const contactNumber = order && order.contactNumber ? order.contactNumber : "";
 
-  const deliveryDate =
-    order.deliveryOption?.method !== "Pick up myself"
-      ? calculateDeliveryDate(order.orderDate, order.deliveryOption!)
-      : "Graudu iela 30(Wednesday and Saturday)";
+  let deliveryDate = "";
+  let deliveryText = "";
 
-  const deliveryText =
+  if (
     order.deliveryOption &&
-    order.deliveryOption.method !== "Pick up myself" &&
-    (order.deliveryOption.method === "Express"
-      ? "(Within 24 hours)"
-      : "(Monday & Thursday 8pm to 10pm)");
+    order.deliveryOption.method !== "Pick up myself"
+  ) {
+    deliveryDate = calculateDeliveryDate(order.orderDate, order.deliveryOption);
+    deliveryText =
+      order.deliveryOption.method === "Express"
+        ? "(Within 24 hours)"
+        : "(Monday & Thursday 8pm to 10pm)";
+  }
+  console.log(deliveryDate);
+
+  const pickUpLocation = "Graudu iela 30, Riga";
+  const pickUpDate = "(Wednesday or Saturday, 10:00 AM to 10:00 PM)";
 
   const isBankTransfer = order.paymentMethod?.method === "Bank Transfer";
 
@@ -118,15 +124,26 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
                   {order.contactNumber}
                 </div>
               )}
-              {deliveryDate && (
-                <div className="mt-2">
-                  <span className="font-semibold">
-                    Expected Delivery Date:{" "}
-                  </span>
-                  {deliveryDate}
-                </div>
+              {order.deliveryOption &&
+              order.deliveryOption.method !== "Pick up myself" ? (
+                <>
+                  <div className="mt-2">
+                    <span className="font-semibold">
+                      Expected Delivery Date:{" "}
+                    </span>
+                    {deliveryDate}
+                  </div>
+                  <div>{deliveryText}</div>
+                </>
+              ) : (
+                <>
+                  <div className="mt-2">
+                    <span className="font-semibold">Pick-Up Location: </span>
+                    {pickUpLocation}
+                  </div>
+                  <div>{pickUpDate}</div>
+                </>
               )}
-              <div>{deliveryText}</div>
 
               <div>
                 <span className="font-semibold">Invoice Date: </span>
