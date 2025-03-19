@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 import { slides } from "@/constants/slider";
+import FlagText from "@/components/FlagText";
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -63,10 +64,9 @@ const HeroSlider = () => {
                 text-white text-center flex items-center overflow-hidden shadow-md 
                 border-t-4 border-green-700 mt-0"
       >
+        {/* animate-marquee   */}
         <div className="animate-marquee whitespace-nowrap text-lg sm:text-xl font-semibold">
-          🚚 Free delivery for orders over
-          <span className="text-yellow-300 font-bold"> €10</span>! Shop now and
-          save more! 🎉
+          <FlagText text="🎁 We are now sending gift parcels from Latvia LV to Sri Lanka LK - Secure & Fast with DHL 🚀" />
         </div>
       </div>
     </>

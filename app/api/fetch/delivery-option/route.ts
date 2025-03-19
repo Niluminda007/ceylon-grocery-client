@@ -11,7 +11,11 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Unauthorized!!!" }, { status: 401 });
     }
 
-    const deliveryOptions = await db.deliveryOption.findMany({});
+    const deliveryOptions = await db.deliveryOption.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
 
     return NextResponse.json(deliveryOptions, { status: 200 });
   } catch (error) {

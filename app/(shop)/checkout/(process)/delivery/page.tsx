@@ -1,5 +1,6 @@
 "use client";
 
+import FlagText from "@/components/FlagText";
 import Loader from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { DISCOUNT_THRESHOLD } from "@/constants/discounts";
@@ -57,34 +58,6 @@ const DeliveryMethodPage = () => {
     }
   }, [deliveryOption]);
 
-  /*
-  const [isEligibleForDeliveryDiscount, setIsEligibleForDeliveryDiscount] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    if (selectedDeliveryOption?.method === "Express") {
-      setIsEligibleForDeliveryDiscount(false);
-    } else {
-      setIsEligibleForDeliveryDiscount(totalCartAmount > DISCOUNT_THRESHOLD);
-    }
-  }, [selectedDeliveryOption, totalCartAmount]);
-
-  const { data: fetchedDeliveryDiscount } = useQuery<Discount>({
-    queryKey: ["deliveryDiscount"],
-    queryFn: () =>
-      fetcher({
-        url: "/fetch/discounts",
-        params: { discountType: DiscountType.DELIVERY },
-      }),
-    enabled: isEligibleForDeliveryDiscount,
-  });
-
-  useEffect(() => {
-    if (fetchedDeliveryDiscount && isEligibleForDeliveryDiscount) {
-      setDiscount(fetchedDeliveryDiscount);
-    }
-  }, [fetchedDeliveryDiscount, isEligibleForDeliveryDiscount]);
-*/
   const handleSelectedDelivery = (deliveryOption: DeliveryOption) => {
     setSelectedDeliveryOption(deliveryOption);
   };
@@ -103,12 +76,12 @@ const DeliveryMethodPage = () => {
     }
   };
 
-  const [isEligibleForDeliveryDiscount, setIsEligibleForDeliveryDiscount] =
-    useState<boolean>(false);
+  // const [isEligibleForDeliveryDiscount, setIsEligibleForDeliveryDiscount] =
+  //   useState<boolean>(false);
 
-  useEffect(() => {
-    setIsEligibleForDeliveryDiscount(totalCartAmount >= DISCOUNT_THRESHOLD);
-  }, [totalCartAmount]);
+  // useEffect(() => {
+  //   setIsEligibleForDeliveryDiscount(totalCartAmount >= DISCOUNT_THRESHOLD);
+  // }, [totalCartAmount]);
 
   return (
     <div className="w-full mx-auto flex flex-col space-y-6 bg-white rounded-lg p-6">
@@ -122,8 +95,8 @@ const DeliveryMethodPage = () => {
       <div className="flex flex-col space-y-4">
         {activeDeliveryOptions &&
           activeDeliveryOptions.map((dOption, index) => {
-            const showFreeDeliveryForStandard =
-              isEligibleForDeliveryDiscount && dOption.method === "Standard";
+            // const showFreeDeliveryForStandard =
+            //   isEligibleForDeliveryDiscount && dOption.method === "Standard";
 
             return (
               <div
@@ -140,16 +113,22 @@ const DeliveryMethodPage = () => {
                   <span className="text-xl text-neutral-800 font-semibold">
                     {dOption.method}
                   </span>
-                  <span className="text-sm text-neutral-600">
-                    {dOption.description}
-                  </span>
+                  {dOption.description && (
+                    <span className="text-sm text-neutral-600">
+                      <FlagText text={dOption.description} />
+                    </span>
+                  )}
+
                   {dOption.method !== "Pick up myself" && (
                     <span className="text-sm text-neutral-500 mt-1">
                       Delivery by: {calculateDeliveryDate(dOption.days)}
                     </span>
                   )}
                 </div>
-                <span
+                <span className="text-xl text-neutral-900 font-semibold relative">
+                  €{decimalToNumber(dOption.cost).toFixed(2)}
+                </span>
+                {/* <span
                   className={`${
                     showFreeDeliveryForStandard ? "line-through" : ""
                   } text-xl text-neutral-900 font-semibold relative`}
@@ -160,7 +139,7 @@ const DeliveryMethodPage = () => {
                       € 0.00
                     </small>
                   )}
-                </span>
+                </span> */}
               </div>
             );
           })}

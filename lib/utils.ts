@@ -125,11 +125,16 @@ export const calculateDeliveryDate = (
     return "Invalid orderedDate provided";
   }
   const isExpress = deliveryOption.method === "Express";
+  const isInternational = deliveryOption.method === "International Delivery";
   let deliveryDate: Date;
 
   if (isExpress) {
     // Express delivery means the same day
     deliveryDate = new Date(orderedDate.getTime());
+  } else if (isInternational) {
+    deliveryDate = new Date(
+      orderedDate.getTime() + deliveryOption.days * 24 * 60 * 60 * 1000
+    );
   } else {
     const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
     const daysUntilNextDelivery: any = {

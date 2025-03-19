@@ -61,8 +61,11 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
     deliveryText =
       order.deliveryOption.method === "Express"
         ? "(Within 24 hours)"
+        : order.deliveryOption.method === "International Delivery"
+        ? "(Within 3-5 days)"
         : "(Monday & Thursday 8pm to 10pm)";
   }
+
   console.log(deliveryDate);
 
   const pickUpLocation = "Graudu iela 30, Riga";
