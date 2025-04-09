@@ -136,6 +136,8 @@ export const calculateDeliveryDate = (
       orderedDate.getTime() + deliveryOption.days * 24 * 60 * 60 * 1000
     );
   } else {
+    /*  Old Option*/
+    /*
     const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
     const daysUntilNextDelivery: any = {
       0: 1, // Sunday -> Monday
@@ -151,8 +153,23 @@ export const calculateDeliveryDate = (
     deliveryDate = new Date(
       orderedDate.getTime() + daysUntilNextDelivery[day] * 24 * 60 * 60 * 1000
     );
-  }
+*/
+    /* New Option */
+    deliveryDate = new Date(orderedDate);
 
+    const day = orderedDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    const hour = orderedDate.getHours();
+
+    if (day == 2 && hour < 18) {
+      //Delivery date is  It's Tuesday Before 6PM -> delviery date is same Tuesday
+      return deliveryDate.toLocaleDateString();
+    }
+
+    // Otherwise-> delviery date is next Tuesday
+    const daysUntilNextTuesday = (9 - day) % 7 || 7;
+    deliveryDate.setDate(orderedDate.getDate() + daysUntilNextTuesday);
+    deliveryDate.setHours(0, 0, 0, 0);
+  }
   // Return the delivery date as a formatted string
   return deliveryDate.toLocaleDateString();
 };

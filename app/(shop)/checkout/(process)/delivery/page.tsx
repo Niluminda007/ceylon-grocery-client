@@ -7,7 +7,7 @@ import { DISCOUNT_THRESHOLD } from "@/constants/discounts";
 import useCartStore from "@/hooks/use-cart";
 import useCheckOut from "@/hooks/use-checkout";
 import { fetcher } from "@/lib/fetcher";
-import { decimalToNumber } from "@/lib/utils";
+import { calculateDeliveryDate, decimalToNumber } from "@/lib/utils";
 import { DeliveryOption, Discount, DiscountType } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -62,11 +62,11 @@ const DeliveryMethodPage = () => {
     setSelectedDeliveryOption(deliveryOption);
   };
 
-  const calculateDeliveryDate = (days: number): string => {
-    const deliveryDate = new Date();
-    deliveryDate.setDate(deliveryDate.getDate() + days);
-    return deliveryDate.toLocaleDateString();
-  };
+  // const calculateDeliveryDate = (days: number): string => {
+  //   const deliveryDate = new Date();
+  //   deliveryDate.setDate(deliveryDate.getDate() + days);
+  //   return deliveryDate.toLocaleDateString();
+  // };
 
   const handleDeliverySubmit = () => {
     if (selectedDeliveryOption) {
@@ -121,7 +121,7 @@ const DeliveryMethodPage = () => {
 
                   {dOption.method !== "Pick up myself" && (
                     <span className="text-sm text-neutral-500 mt-1">
-                      Delivery by: {calculateDeliveryDate(dOption.days)}
+                      Delivery by: {calculateDeliveryDate(new Date(), dOption)}
                     </span>
                   )}
                 </div>
