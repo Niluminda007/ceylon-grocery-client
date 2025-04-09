@@ -63,7 +63,7 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
         ? "(Within 24 hours)"
         : order.deliveryOption.method === "International Delivery"
         ? "(Within 3-5 days)"
-        : "(Monday & Thursday 8pm to 10pm)";
+        : "(Only Tuesday 8PM - 10PM)";
   }
 
   console.log(deliveryDate);
