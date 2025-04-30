@@ -41,6 +41,12 @@ export const Footer = () => {
             >
               Contact
             </Link>
+            <Link
+              href="/profile/feedback"
+              className="text-gray-300 hover:text-white transition-colors"
+            >
+              Reviews
+            </Link>
           </div>
         </div>
 
