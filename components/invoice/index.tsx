@@ -226,8 +226,6 @@ const Invoice: FC<InvoiceProps> = ({ order }: InvoiceProps) => {
               Terms and Conditions
             </h2>
             <ul className="mt-2 space-y-1 text-sm text-gray-600">
-              <li>Free delivery only for orders over €10.</li>
-              <li>For orders below €10, a €2.50 delivery fee applies.</li>
               <li>Indicate your invoice number for payment reference.</li>
             </ul>
           </div>
